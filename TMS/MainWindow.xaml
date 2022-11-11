@@ -1,0 +1,18 @@
+﻿<Window x:Class="TMS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TMS"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Label x:Name="LoginTitle" Content="Welcome To TMS" HorizontalAlignment="Left" Margin="343,134,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblUserName" Content="UserName:" HorizontalAlignment="Left" Margin="297,206,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPassword" Content="Password:" HorizontalAlignment="Left" Margin="303,232,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtUserName" HorizontalAlignment="Left" Margin="365,210,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="365,236,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <Button x:Name="btnLogin" Content="Log in" HorizontalAlignment="Left" Margin="394,282,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
