@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="AdminWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button x:Name="btnTMS_Data" Content="TMS Data" HorizontalAlignment="Left" Margin="483,38,0,0" VerticalAlignment="Top" Height="25" Width="70"/>
+        <Button x:Name="btnBackup" Content="Backup" HorizontalAlignment="Left" Margin="579,38,0,0" VerticalAlignment="Top" Height="25" Width="70"/>
+        <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="672,38,0,0" VerticalAlignment="Top" Height="25" Width="70"/>
+        <Label Content="TMS: Admin" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
+
+        <DataGrid Name="logFiles" AutoGenerateColumns="False" Height="300" Width="700" Margin="50,100,50,30" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="100"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="80"/>
+                <DataGridTextColumn Header="Log" Binding="{Binding Contents}" Width="520"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Window>
