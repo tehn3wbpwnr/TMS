@@ -16,7 +16,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="100"/>
                 <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="80"/>
-                <DataGridTextColumn Header="Log" Binding="{Binding Contents}" Width="520"/>
+                <DataGridTextColumn Header="Log" Binding="{Binding Contents}" Width="450"/>
             </DataGrid.Columns>
         </DataGrid>
 
