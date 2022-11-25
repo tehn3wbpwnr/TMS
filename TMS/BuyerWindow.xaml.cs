@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
+using TMS.Classes;
 
 namespace TMS
 {
@@ -38,7 +40,14 @@ namespace TMS
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
-            // connect application with the contract market place
+            ContractMarketplace contractMarketplace = new ContractMarketplace();
+            DataTable dt = new DataTable();
+            string connect = "Server=159.89.117.198;Database=cmp;Uid=DevOSHT;Pwd= Snodgr4ss!;";
+            string statement = "SELECT * FROM Contract;";
+
+            dt = contractMarketplace.SetUpConnection(dt, connect, statement);
+
+            dataShow.ItemsSource = dt.DefaultView;
         }
     }
 }

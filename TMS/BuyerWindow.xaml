@@ -7,9 +7,8 @@
         mc:Ignorable="d"
         Title="BuyerWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid AutoGenerateColumns="True" Margin="30,120,30,30" SelectionChanged="DataGrid_SelectionChanged"/>
-        <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="681,65,0,0" VerticalAlignment="Top" Height="30" Width="89" Click="btnConnect_Click"/>
+        <DataGrid Name="dataShow" Height="Auto" Width="Auto" AutoGenerateColumns="True" Margin="30,120,30,153" SelectionChanged="DataGrid_SelectionChanged" IsReadOnly="True"/>
+        <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="635,47,0,0" VerticalAlignment="Top" Height="31" Width="89" Click="btnConnect_Click"/>
         <Label Content="TMS: Buyer" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
-
     </Grid>
 </Window>
