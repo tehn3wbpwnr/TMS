@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +18,17 @@ namespace TMS
     /// <summary>
     /// Interaction logic for Window3.xaml
     /// </summary>
-    public partial class Window3 : Window
+    public partial class AdminWindow : Window
     {
-        public Window3()
+        public AdminWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            LoginWindow lw = new LoginWindow();
+            lw.Show();
         }
     }
 }
