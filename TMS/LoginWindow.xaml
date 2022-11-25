@@ -7,12 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Label x:Name="LoginTitle" Content="Welcome To TMS" HorizontalAlignment="Left" Margin="343,134,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblUserName" Content="UserName:" HorizontalAlignment="Left" Margin="297,206,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblPassword" Content="Password:" HorizontalAlignment="Left" Margin="303,232,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtUserName" HorizontalAlignment="Left" Margin="365,210,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="365,236,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
-        <Button x:Name="btnLogin" Content="Log in" HorizontalAlignment="Left" Margin="394,282,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="LoginTitle" Content="Welcome to TMS" HorizontalAlignment="Left" Margin="343,134,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblUserName" Content="UserName:" HorizontalAlignment="Left" Margin="279,191,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPassword" Content="Password:" HorizontalAlignment="Left" Margin="282,222,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtUserName" HorizontalAlignment="Left" Margin="352,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="352,222,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnLogin" Content="Log in" HorizontalAlignment="Left" Margin="375,276,0,0" VerticalAlignment="Top" Click="btnLogin_Click"/>
+        <Label x:Name="lblError" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,245,0,0" VerticalAlignment="Top" Foreground="Red" />
 
     </Grid>
 </Window>

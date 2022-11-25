@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,44 @@ namespace TMS
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtUserName.Text == "Admin")
+            {
+                if (txtPassword.Password == "AdminPass")
+                {
+                    Window3 win3 = new Window3();
+                    win3.Show();
+                    Close();
+                }
+            }
+
+            else if (txtUserName.Text == "Buyer")
+            {
+                if (txtPassword.Password == "BuyerPass")
+                {
+                    Window1 win1 = new Window1();
+                    win1.Show();
+                    Close();
+                }
+            }
+
+            else if (txtUserName.Text == "Planner")
+            {
+                if (txtPassword.Password == "PlannerPass")
+                {
+                    Window2 win2 = new Window2();
+                    win2.Show();
+                    Close();
+                }
+            }
+
+            else
+            {
+                lblError.Content = "Invalid Username or Password";
+            }
         }
     }
 }
