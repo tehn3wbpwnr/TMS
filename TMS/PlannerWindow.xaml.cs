@@ -17,9 +17,9 @@ namespace TMS
     /// <summary>
     /// Interaction logic for Window2.xaml
     /// </summary>
-    public partial class Window2 : Window
+    public partial class PlannerWindow : Window
     {
-        public Window2()
+        public PlannerWindow()
         {
             InitializeComponent();
         }

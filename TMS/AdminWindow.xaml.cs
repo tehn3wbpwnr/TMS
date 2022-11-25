@@ -17,9 +17,9 @@ namespace TMS
     /// <summary>
     /// Interaction logic for Window3.xaml
     /// </summary>
-    public partial class Window3 : Window
+    public partial class AdminWindow : Window
     {
-        public Window3()
+        public AdminWindow()
         {
             InitializeComponent();
         }

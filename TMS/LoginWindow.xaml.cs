@@ -19,9 +19,9 @@ namespace TMS
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginWindow : Window
     {
-        public MainWindow()
+        public LoginWindow()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace TMS
             {
                 if (txtPassword.Password == "AdminPass")
                 {
-                    Window3 win3 = new Window3();
+                    AdminWindow win3 = new AdminWindow();
                     win3.Show();
                     Close();
                 }
@@ -42,7 +42,7 @@ namespace TMS
             {
                 if (txtPassword.Password == "BuyerPass")
                 {
-                    Window1 win1 = new Window1();
+                    BuyerWindow win1 = new BuyerWindow();
                     win1.Show();
                     Close();
                 }
@@ -52,7 +52,7 @@ namespace TMS
             {
                 if (txtPassword.Password == "PlannerPass")
                 {
-                    Window2 win2 = new Window2();
+                    PlannerWindow win2 = new PlannerWindow();
                     win2.Show();
                     Close();
                 }
