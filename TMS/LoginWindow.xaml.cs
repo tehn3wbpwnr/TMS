@@ -28,34 +28,27 @@ namespace TMS
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (txtUserName.Text == "Admin")
+            lblError.Content = ""; 
+
+            if ((txtUserName.Text == "Admin") && (txtPassword.Password == "AdminPass"))
             {
-                if (txtPassword.Password == "AdminPass")
-                {
-                    AdminWindow win3 = new AdminWindow();
-                    win3.Show();
-                    Close();
-                }
+                AdminWindow aw = new AdminWindow();
+                aw.Show();
+                Close();
             }
 
-            else if (txtUserName.Text == "Buyer")
+            else if ((txtUserName.Text == "Buyer") && (txtPassword.Password == "BuyerPass"))
             {
-                if (txtPassword.Password == "BuyerPass")
-                {
-                    BuyerWindow win1 = new BuyerWindow();
-                    win1.Show();
-                    Close();
-                }
+                BuyerWindow bw = new BuyerWindow();
+                bw.Show();
+                Close();
             }
 
-            else if (txtUserName.Text == "Planner")
+            else if ((txtUserName.Text == "Planner") && (txtPassword.Password == "PlannerPass"))
             {
-                if (txtPassword.Password == "PlannerPass")
-                {
-                    PlannerWindow win2 = new PlannerWindow();
-                    win2.Show();
-                    Close();
-                }
+                PlannerWindow pw = new PlannerWindow();
+                pw.Show();
+                Close();
             }
 
             else
