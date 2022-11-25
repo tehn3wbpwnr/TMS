@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace TMS
 {
@@ -28,6 +29,16 @@ namespace TMS
         {
             LoginWindow lw = new LoginWindow();
             lw.Show();
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //display market place contents 
+        }
+
+        private void btnConnect_Click(object sender, RoutedEventArgs e)
+        {
+            // connect application with the contract market place
         }
     }
 }
