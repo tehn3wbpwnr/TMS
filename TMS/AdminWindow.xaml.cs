@@ -26,6 +26,7 @@ namespace TMS
     {
         // list of log file classes, just a container of info 
         List<LogFile> lf = new List<LogFile>();
+        Admin admin = new Admin();
 
         public AdminWindow()
         {
@@ -58,6 +59,12 @@ namespace TMS
 
             dglogTable.ItemsSource = lf;
             dglogTable.Items.Refresh();
+        }
+
+        private void btnTMS_Data_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigWindow cw = new ConfigWindow();
+            cw.ShowDialog();
         }
     }
 }
