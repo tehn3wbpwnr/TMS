@@ -28,7 +28,7 @@ namespace TMS.Classes
             StreamWriter writer = null;
             try
             {
-                writer = new StreamWriter(FileName);
+                writer = new StreamWriter(FileName, true);
                 writer.WriteLine(log);
                 writer.Close();
             }
@@ -48,7 +48,6 @@ namespace TMS.Classes
         public List<string> LoadLogs()
         {
             List<string> logs = new List<string>();
-
             StreamReader reader = null;
             try
             {

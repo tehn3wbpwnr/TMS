@@ -14,7 +14,7 @@
 
         <DataGrid Name="dglogTable" AutoGenerateColumns="False" Height="300" Width="700" Margin="50,100,50,30" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Log" Binding="{Binding}" Width="630" />
+                <DataGridTextColumn Header="Log" Binding="{Binding}" />
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="680,102,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnRefresh_Click"/>
