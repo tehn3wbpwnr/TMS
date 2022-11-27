@@ -24,7 +24,6 @@ namespace TMS
     /// </summary>
     public partial class AdminWindow : Window
     {
-        // list of log file classes, just a container of info 
 
         public AdminWindow()
         {
@@ -54,12 +53,14 @@ namespace TMS
             logger.WriteLog("test log 2");
             //end of test
 
-
-            // this will be changed to read the file contents and assign values per line
-            List<string> logs = new List<string>();
-            logs = logger.LoadLogs();
-            dglogTable.ItemsSource = logs;
+            dglogTable.ItemsSource = logger.LoadLogs();
             dglogTable.Items.Refresh();
+        }
+
+        private void btnTMS_Data_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigWindow cw = new ConfigWindow();
+            cw.ShowDialog();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace TMS
             return carrierDeleted;
         }
 
-        public void TMSConfig()
+        public void TMSConfig(string key, string value)
         {
 
         }
