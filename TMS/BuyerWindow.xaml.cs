@@ -33,11 +33,6 @@ namespace TMS
             lw.Show();
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //display market place contents 
-        }
-
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
             ContractMarketplace contractMarketplace = new ContractMarketplace();
