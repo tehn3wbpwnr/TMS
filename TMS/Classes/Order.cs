@@ -27,6 +27,7 @@ namespace TMS
         public bool Complete { get { return complete; } set { complete = value; } }
         public int NumOfTrips { get { return numOfTrips; } set { numOfTrips = value; } }
         public int Quantity { get { return quantity; } set { quantity = value; } }
+        public decimal orderTotal { get { return orderTotal; } set { orderTotal = value; } }
 
 
         public Order(string client, int jobType, int quantity, string origin, string destination, int vanType)
