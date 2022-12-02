@@ -98,6 +98,7 @@
     </Compile>
     <Compile Include="Classes\ContractMarketplace.cs" />
     <Compile Include="Classes\Logger.cs" />
+    <Compile Include="Classes\TmsDatabase.cs" />
     <Compile Include="ConfigWindow.xaml.cs">
       <DependentUpon>ConfigWindow.xaml</DependentUpon>
     </Compile>

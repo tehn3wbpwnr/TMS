@@ -47,6 +47,7 @@ namespace TMS
 
         private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
         {
+            TmsDatabase tmsDB = new TmsDatabase();
             DataRowView row = dataShow.SelectedItems[0] as DataRowView;
             Order newOrder = new Order(row.Row.ItemArray[0].ToString(),
                                        int.Parse(row.Row.ItemArray[1].ToString()),
@@ -54,8 +55,8 @@ namespace TMS
                                        row.Row.ItemArray[3].ToString(),
                                        row.Row.ItemArray[4].ToString(),
                                        int.Parse(row.Row.ItemArray[5].ToString()));
-
-
+            tmsDB.Connection();
+            tmsDB.InsertStatement(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
         }
     }
 }
