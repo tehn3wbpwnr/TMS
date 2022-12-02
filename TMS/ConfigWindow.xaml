@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMS"
         mc:Ignorable="d"
-        Title="ConfigWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="btnLogFilePath" Content="Change Log Path" HorizontalAlignment="Left" Margin="78,41,0,0" VerticalAlignment="Top" Click="btnLogFilePath_Click"/>
+        Title="Configuration" Height="200" Width="400">
+    <Grid Margin="0,0,10,-6">
+        <Button x:Name="btnLogFilePath" Content="Change Log Path" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Click="btnLogFilePath_Click" Height="22" RenderTransformOrigin="-0.34,-1.034"/>
+        <Label Content="IP Address: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Port :" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtIP" HorizontalAlignment="Left" Margin="82,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtPort" HorizontalAlignment="Left" Margin="82,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Name="btnChangeIPAndPort" Content="Change IP and Port" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Click="btnChangeIPAndPort_Click"/>
 
     </Grid>
 </Window>

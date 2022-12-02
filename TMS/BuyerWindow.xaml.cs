@@ -44,5 +44,17 @@ namespace TMS
 
             dataShow.ItemsSource = dt.DefaultView;
         }
+
+        private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataShow.SelectedCells != null)
+            {
+                MessageBox.Show(dataShow.SelectedCells.ToString());
+            }
+            else
+            {
+                MessageBox.Show("please select a contract");
+            }
+        }
     }
 }
