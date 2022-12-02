@@ -23,6 +23,7 @@ namespace TMS
     /// </summary>
     public partial class BuyerWindow : Window
     {
+        DataTable loadedContracts = new DataTable(); 
         public BuyerWindow()
         {
             InitializeComponent();
@@ -36,25 +37,24 @@ namespace TMS
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
             ContractMarketplace contractMarketplace = new ContractMarketplace();
-            DataTable dt = new DataTable();
             string connect = "Server=159.89.117.198;Database=cmp;Uid=DevOSHT;Pwd= Snodgr4ss!;";
             string statement = "SELECT * FROM Contract;";
 
-            dt = contractMarketplace.SetUpConnection(dt, connect, statement);
+            loadedContracts = contractMarketplace.SetUpConnection(loadedContracts, connect, statement);
 
-            dataShow.ItemsSource = dt.DefaultView;
+            dataShow.ItemsSource = loadedContracts.DefaultView;
         }
 
         private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (dataShow.SelectedCells != null)
-            {
-                MessageBox.Show(dataShow.SelectedCells.ToString());
-            }
-            else
-            {
-                MessageBox.Show("please select a contract");
-            }
+            DataRowView row = dataShow.SelectedItems[0] as DataRowView;
+            Order newOrder = new Order(row.Row.ItemArray[0].ToString(),
+                                       int.Parse(row.Row.ItemArray[1].ToString()),
+                                       int.Parse(row.Row.ItemArray[2].ToString()),
+                                       row.Row.ItemArray[3].ToString(),
+                                       row.Row.ItemArray[4].ToString(),
+                                       int.Parse(row.Row.ItemArray[5].ToString()));
+
         }
     }
 }
