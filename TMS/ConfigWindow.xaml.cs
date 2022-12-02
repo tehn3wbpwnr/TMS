@@ -26,6 +26,7 @@ namespace TMS
         private const string LOG_KEY = "LogFilePath";
         private const string IP_KEY = "DB_IPAddress";
         private const string PORT_KEY = "DB_Port";
+        private const string IP_MP_KEY = "MP_IPAddress";
 
         public ConfigWindow()
         {
@@ -53,6 +54,14 @@ namespace TMS
             {
                 path = ofd.FileName;
                 UpdateConfigKey(LOG_KEY, path);
+            }
+        }
+
+        private void btnChangeMpIP_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtMpIP.Text))
+            {
+                UpdateConfigKey(IP_MP_KEY, txtMpIP.Text);   
             }
         }
 

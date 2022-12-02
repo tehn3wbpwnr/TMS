@@ -8,8 +8,8 @@
         Title="AdminWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="btnTMS_Data" Content="TMS Data" HorizontalAlignment="Left" Margin="483,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnTMS_Data_Click"/>
-        <Button x:Name="btnBackup" Content="Backup" HorizontalAlignment="Left" Margin="579,38,0,0" VerticalAlignment="Top" Height="25" Width="70"/>
-        <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="672,38,0,0" VerticalAlignment="Top" Height="25" Width="70"/>
+        <Button x:Name="btnBackup" Content="Backup" HorizontalAlignment="Left" Margin="579,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnBackup_Click"/>
+        <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="672,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnSettings_Click"/>
         <Label Content="TMS: Admin" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
 
         <DataGrid Name="dglogTable" AutoGenerateColumns="False" Height="300" Width="700" Margin="50,100,50,30" IsReadOnly="True">
