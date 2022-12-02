@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.X509;
 using TMS.Classes;
 
 namespace TMS
@@ -49,7 +50,13 @@ namespace TMS
         {
             if (dataShow.SelectedCells != null)
             {
-                MessageBox.Show(dataShow.SelectedCells.ToString());
+                string str = ""; 
+                DataRowView row = (DataRowView)dataShow.SelectedItem;
+                for (int i = 0; i > 6; i++)
+                {
+                    str += row[i].ToString();
+                } 
+                MessageBox.Show(str); 
             }
             else
             {

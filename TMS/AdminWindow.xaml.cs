@@ -59,8 +59,18 @@ namespace TMS
 
         private void btnTMS_Data_Click(object sender, RoutedEventArgs e)
         {
+            //load csv into table
+        }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
             ConfigWindow cw = new ConfigWindow();
             cw.ShowDialog();
+        }
+
+        private void btnBackup_Click(object sender, RoutedEventArgs e)
+        {
+            //stream read & write 
         }
     }
 }
