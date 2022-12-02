@@ -27,10 +27,22 @@ namespace TMS
         public bool Complete { get { return complete; } set { complete = value; } }
         public int NumOfTrips { get { return numOfTrips; } set { numOfTrips = value; } }
         public int Quantity { get { return quantity; } set { quantity = value; } }
+        public decimal orderTotal { get { return orderTotal; } set { orderTotal = value; } }
 
 
         public Order(string client, int jobType, int quantity, string origin, string destination, int vanType)
         {
+            this.ClientName = client;
+            this.JobType = jobType;
+            this.Quantity = quantity;
+            this.Origin = origin;
+            this.Destination = destination;
+            this.TruckType = vanType;
+            this.Complete = false;
+        }
+        public Order(int orderID, string client, int jobType, int quantity, string origin, string destination, int vanType)
+        {
+            this.OrderId = orderID;
             this.ClientName = client;
             this.JobType = jobType;
             this.Quantity = quantity;
