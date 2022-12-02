@@ -23,10 +23,25 @@ namespace TMS
     /// </summary>
     public partial class ConfigWindow : Window
     {
-        private const string key = "LogFilePath";
+        private const string LOG_KEY = "LogFilePath";
+        private const string IP_KEY = "DB_IPAddress";
+        private const string PORT_KEY = "DB_Port";
+
         public ConfigWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnChangeIPAndPort_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtIP.Text != null)
+            {
+                UpdateConfigKey(IP_KEY, txtIP.Text);
+            }
+            if (txtPort.Text != null)
+            {
+                UpdateConfigKey(PORT_KEY, txtPort.Text);
+            }
         }
 
         private void btnLogFilePath_Click(object sender, RoutedEventArgs e)
@@ -37,11 +52,15 @@ namespace TMS
             if (ofd.ShowDialog() == true)
             {
                 path = ofd.FileName;
-                UpdateConfigKey(key, path);
+                UpdateConfigKey(LOG_KEY, path);
             }
         }
 
-        public void UpdateConfigKey(string strKey, string newValue)
+
+
+
+        //Referenced
+        private void UpdateConfigKey(string strKey, string newValue)
 
         {
 
@@ -82,7 +101,7 @@ namespace TMS
         }
 
         // also stolen
-        public bool ConfigKeyExists(string strKey)
+        private bool ConfigKeyExists(string strKey)
 
         {
 

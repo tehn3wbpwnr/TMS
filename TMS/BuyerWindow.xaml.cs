@@ -33,11 +33,6 @@ namespace TMS
             lw.Show();
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //display market place contents 
-        }
-
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
             ContractMarketplace contractMarketplace = new ContractMarketplace();
@@ -48,6 +43,18 @@ namespace TMS
             dt = contractMarketplace.SetUpConnection(dt, connect, statement);
 
             dataShow.ItemsSource = dt.DefaultView;
+        }
+
+        private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataShow.SelectedCells != null)
+            {
+                MessageBox.Show(dataShow.SelectedCells.ToString());
+            }
+            else
+            {
+                MessageBox.Show("please select a contract");
+            }
         }
     }
 }
