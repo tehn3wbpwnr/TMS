@@ -21,6 +21,7 @@ namespace TMS.Classes
             corridor.Add(new City("Belleville", 82, 1.2, "Oshawa", "Kingston"));
             corridor.Add(new City("Kingston", 196, 2.5, "Belleville", "Ottawa"));
             corridor.Add(new City("Ottawa", 0, 0, "Kingston", "END"));
+
         }
     }
 }
