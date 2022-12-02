@@ -97,10 +97,7 @@
       <DependentUpon>BuyerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\ContractMarketplace.cs" />
-    <Compile Include="Classes\LoadLogFile.cs" />
-    <Compile Include="ConfigWindow.xaml.cs">
-      <DependentUpon>ConfigWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Classes\Logger.cs" />
     <Compile Include="PlannerWindow.xaml.cs">
       <DependentUpon>PlannerWindow.xaml</DependentUpon>
     </Compile>
