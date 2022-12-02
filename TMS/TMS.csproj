@@ -96,6 +96,7 @@
     <Compile Include="BuyerWindow.xaml.cs">
       <DependentUpon>BuyerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\City.cs" />
     <Compile Include="Classes\ContractMarketplace.cs" />
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\TmsDatabase.cs" />
@@ -122,7 +123,7 @@
     </Compile>
     <Compile Include="Classes\Buyer.cs" />
     <Compile Include="Classes\Admin.cs" />
-    <Compile Include="Classes\Corridor.cs" />
+    <Compile Include="Classes\RouteTable.cs" />
     <Compile Include="Classes\Invoice.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\Planner.cs" />
@@ -162,6 +163,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Carriers.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
