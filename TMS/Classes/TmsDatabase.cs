@@ -22,7 +22,7 @@ namespace TMS.Classes
             conn = new MySqlConnection(connect);
         }
 
-        public DataTable SelectStatement(DataTable dt)
+        public DataTable getNewOrders(DataTable dt)
         {
             string sqlStatem = "SELECT newOrderID, clientName, jobType, quantity, origin, destination, vanType FROM New_Orders";
 

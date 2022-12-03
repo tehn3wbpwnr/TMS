@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TMS.Classes;
 
 namespace TMS
 {
@@ -23,7 +24,8 @@ namespace TMS
     {
         //0 = no table //1 = initiatetd orders //2 = completed orders
         private static int table = 0;
-
+        TmsDatabase tmsDB = new TmsDatabase();
+        DataTable dt = new DataTable();
         public PlannerWindow()
         {
             InitializeComponent();
@@ -38,6 +40,9 @@ namespace TMS
         {
             table = 1;
             // connect method 
+            tmsDB.Connection();
+            tmsDB.getNewOrders(dt);
+            initOrders.ItemsSource = dt.DefaultView;
         }
         private void btnViewCompleted_Click(object sender, RoutedEventArgs e)
         {
