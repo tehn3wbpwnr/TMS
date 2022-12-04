@@ -137,17 +137,17 @@ namespace TMS
 
 
 
-            decimal Total
+            decimal Total;
             if (inprogressOrder.JobType == 0)//0 is an FTL truck
             {
                 //get selected carriers FTL rate
-                decimal ftlRate = decimal.Parse(row.Row.ItemArray[4].ToString());
+                decimal ftlRate = decimal.Parse(row.Row.ItemArray[5].ToString());
                 Total = ftlRate * kmTotal;
 
             }
             else// LTL truck
             {
-                decimal ltlRate = decimal.Parse(row.Row.ItemArray[5].ToString());
+                decimal ltlRate = decimal.Parse(row.Row.ItemArray[6].ToString());
                 Total = ltlRate * kmTotal;
             }
 
@@ -163,6 +163,8 @@ namespace TMS
             inprogressOrder.NumOfTrips = numOfTrips;
 
             //put this order into the new inprogress order table with the added total and numoftrips as new columns
+            tmsDB.InsertProcessOrder(inprogressOrder.ClientName, inprogressOrder.JobType, inprogressOrder.Quantity, inprogressOrder.Origin, inprogressOrder.Destination, inprogressOrder.TruckType, Total, numOfTrips);
+            //ADD IN CHANGING OF BUTTONS!!!!!
 
         }
     }

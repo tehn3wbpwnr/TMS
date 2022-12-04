@@ -77,11 +77,11 @@ namespace TMS.Classes
             conn.Close();
         }
 
-        public void InsertProcessOrder(string client, int jobType, int quantity, string origin, string destination, int vanType)
+        public void InsertProcessOrder(string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips)
         {
 
             //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
-            string sql = "INSERT INTO process_orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (@client, @jobType, @quantity, @origin, @destination, @vanType);";
+            string sql = "INSERT INTO process_orders (clientName, jobType, quantity, origin, destination, vanType,  carrierTotal, numOfTrips) VALUES (@client, @jobType, @quantity, @origin, @destination, @vanType, @carrierTotal, @numOfTrips);";
             conn.Open();
             using (var command = new MySqlCommand(sql, conn))
             {
@@ -91,6 +91,8 @@ namespace TMS.Classes
                 command.Parameters.Add("@origin", MySqlDbType.VarChar).Value = origin;
                 command.Parameters.Add("@destination", MySqlDbType.VarChar).Value = destination;
                 command.Parameters.Add("@vanType", MySqlDbType.VarChar).Value = vanType;
+                command.Parameters.Add("@carrierTotal", MySqlDbType.VarChar).Value = carrierTotal;
+                command.Parameters.Add("@numOfTrips", MySqlDbType.VarChar).Value = numOfTrips;
                 command.ExecuteNonQuery();
             }
             conn.Close();
