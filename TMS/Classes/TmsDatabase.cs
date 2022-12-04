@@ -90,5 +90,24 @@ namespace TMS.Classes
         //    cmd.Dispose();
         //    conn.Close();
         //}
+
+        public DataTable AdminSelectCarrier(DataTable dt)
+        {
+            string sqlStatem = "SELECT carrierID, cName, dCity, FTLA, LTLA, FTLRate, LTLRate, reefCharge FROM Carriers";
+
+            try
+            {
+                conn.Open();
+                using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatem, conn))
+                    da.Fill(dt);
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
+        }
+
     }
 }

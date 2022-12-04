@@ -63,7 +63,8 @@ namespace TMS
 
         private void btnTMS_Data_Click(object sender, RoutedEventArgs e)
         {
-            //load csv into table
+            TmsDataWindow tdw = new TmsDataWindow();
+            tdw.ShowDialog();
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
