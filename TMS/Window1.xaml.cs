@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +18,9 @@ using TMS.Classes;
 
 namespace TMS
 {
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
     public partial class TmsDataWindow : Window
     {
+        DataTable dt = new DataTable();
         public TmsDataWindow()
         {
             InitializeComponent();
@@ -28,11 +28,7 @@ namespace TMS
 
         private void btnCarrierData_Click(object sender, RoutedEventArgs e)
         {
-            DataTable loadCarriers = new DataTable();
-            TmsDatabase tms = new TmsDatabase();
-            tms.Connection();
-            loadCarriers = tms.AdminSelectCarrier(loadCarriers);
-            dataShow.ItemsSource = loadCarriers.DefaultView;
+            loadCarrierData();
         }
 
         private void btnRateFee_Click(object sender, RoutedEventArgs e)
@@ -40,9 +36,43 @@ namespace TMS
 
         }
 
-        private void RouteTable_Click(object sender, RoutedEventArgs e)
+        private void btnRouteTable_Click(object sender, RoutedEventArgs e)
         {
-            DataTable rt = new DataTable();
+
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddWindow aw = new AddWindow();
+            aw.Show();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            TmsDatabase td = new TmsDatabase();
+            DataRowView row = dataShow.SelectedItems[0] as DataRowView;
+            if (row != null)
+            {
+                td.Connection();
+                td.AdminCarrierDataDelete(int.Parse(row.Row.ItemArray[0].ToString()));
+                loadCarrierData();
+            }
+        }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView row = dataShow.SelectedItems[0] as DataRowView;
+            UpdateWindow uw = new UpdateWindow(row);
+            uw.Show();
+        }
+
+        private void loadCarrierData()
+        {
+            DataTable dt = new DataTable();
+            TmsDatabase tms = new TmsDatabase();
+            tms.Connection();
+            dt = tms.AdminSelectCarrier(dt);
+            dataShow.ItemsSource = dt.DefaultView;
         }
     }
 }

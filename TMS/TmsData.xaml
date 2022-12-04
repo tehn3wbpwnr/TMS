@@ -11,9 +11,6 @@
         <DataGrid Name="dataShow" Height="Auto" Width="Auto" AutoGenerateColumns="True" Margin="30,120,30,153" IsReadOnly="True"/>
         <Button Name="btnCarrierData" Content="Carrier Data" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnCarrierData_Click"/>
         <Button Name="btnRateFee" Content="Rate/Fee" HorizontalAlignment="Left" Margin="130,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRateFee_Click"/>
-        <Button Name="btnRouteTable" Content="Routes" HorizontalAlignment="Left" Margin="230,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRouteTable_Click"/>
-        <Button Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="30,293,0,0" VerticalAlignment="Top" Width="50" Click="btnAdd_Click"/>
-        <Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="30,329,0,0" VerticalAlignment="Top" Width="50" Click="btnDelete_Click"/>
-        <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="30,369,0,0" VerticalAlignment="Top" Width="50" Click="btnUpdate_Click"/>
+        <Button Name="RouteTable" Content="Routes" HorizontalAlignment="Left" Margin="230,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="RouteTable_Click"/>
     </Grid>
 </Window>

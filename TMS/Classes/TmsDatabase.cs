@@ -109,5 +109,58 @@ namespace TMS.Classes
             return dt;
         }
 
+        public void AdminCarrierDataInsert(string cName, string dCity, int FTLA, int LTLA, decimal FTLRate, decimal LTLRate, decimal reefCharge)
+        {
+
+            //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
+            string sql = "INSERT INTO Carriers (cName, dCity, FTLA, LTLA, FTLRate, LTLRate, reefCharge) VALUES (@cName, @dCity, @FTLA, @LTLA, @FTLRate, @LTLRate, @reefCharge);";
+            conn.Open();
+            using (var command = new MySqlCommand(sql, conn))
+            {
+                command.Parameters.Add("@cName", MySqlDbType.VarChar).Value = cName;
+                command.Parameters.Add("@dCity", MySqlDbType.VarChar).Value = dCity;
+                command.Parameters.Add("@FTLA", MySqlDbType.Int64).Value = FTLA;
+                command.Parameters.Add("@LTLA", MySqlDbType.Int64).Value = LTLA;
+                command.Parameters.Add("@FTLRate", MySqlDbType.Decimal).Value = FTLRate;
+                command.Parameters.Add("@LTLRate", MySqlDbType.Decimal).Value = LTLRate;
+                command.Parameters.Add("@reefCharge", MySqlDbType.Decimal).Value = reefCharge;
+                command.ExecuteNonQuery();
+            }
+            conn.Close();
+        }
+
+        public void AdminCarrierDataDelete(int carrierID)
+        {
+            String sqlStatem = "DELETE FROM Carriers WHERE carrierID=" + carrierID;
+            adpt = new MySqlDataAdapter();
+
+            cmd = new MySqlCommand(sqlStatem, conn);
+
+            conn.Open();
+            adpt.DeleteCommand = cmd;
+            adpt.DeleteCommand.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+
+        public void AdminCarrierDataUpdate(int carrierID, string cName, string dCity, int FTLA, int LTLA, decimal FTLRate, decimal LTLRate, decimal reefCharge)
+        {
+            string sql = "UPDATE Carriers SET cName=@cName, dCity=@dCity, FTLA=@FTLA, LTLA=@LTLA, FTLRate=@FTLRate, LTLRate=@LTLRate, reefCharge=@reefCharge WHERE carrierID=@carrierID;";
+            conn.Open();
+            using (var command = new MySqlCommand(sql, conn))
+            {
+                command.Parameters.Add("@cName", MySqlDbType.VarChar).Value = cName;
+                command.Parameters.Add("@dCity", MySqlDbType.VarChar).Value = dCity;
+                command.Parameters.Add("@FTLA", MySqlDbType.VarChar).Value = FTLA;
+                command.Parameters.Add("@LTLA", MySqlDbType.VarChar).Value = LTLA;
+                command.Parameters.Add("@FTLRate", MySqlDbType.VarChar).Value = FTLRate;
+                command.Parameters.Add("@LTLRate", MySqlDbType.VarChar).Value = LTLRate;
+                command.Parameters.Add("@reefCharge", MySqlDbType.VarChar).Value = reefCharge;
+                command.Parameters.Add("@carrierID", MySqlDbType.VarChar).Value = carrierID;
+                command.ExecuteNonQuery();
+            }
+            conn.Close();
+        }
     }
 }
