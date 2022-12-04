@@ -1,0 +1,19 @@
+﻿<Window x:Class="TMS.TmsDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TMS"
+        mc:Ignorable="d"
+        Title="TMS Data" Height="450" Width="800">
+    <Grid>
+        <Label Content="TMS: Data" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
+        <DataGrid Name="dataShow" Height="Auto" Width="Auto" AutoGenerateColumns="True" Margin="30,120,30,153" IsReadOnly="True"/>
+        <Button Name="btnCarrierData" Content="Carrier Data" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnCarrierData_Click"/>
+        <Button Name="btnRateFee" Content="Rate/Fee" HorizontalAlignment="Left" Margin="130,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRateFee_Click"/>
+        <Button Name="btnRouteTable" Content="Routes" HorizontalAlignment="Left" Margin="230,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRouteTable_Click"/>
+        <Button Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="30,293,0,0" VerticalAlignment="Top" Width="50" Click="btnAdd_Click"/>
+        <Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="30,329,0,0" VerticalAlignment="Top" Width="50" Click="btnDelete_Click"/>
+        <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="30,369,0,0" VerticalAlignment="Top" Width="50" Click="btnUpdate_Click"/>
+    </Grid>
+</Window>
