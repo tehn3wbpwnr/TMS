@@ -42,7 +42,6 @@ namespace TMS.Classes
 
         public void InsertStatement(string client, int jobType, int quantity, string origin, string destination, int vanType)
         {
-
             //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
             string sql = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (@client, @jobType, @quantity, @origin, @destination, @vanType);";
             conn.Open();

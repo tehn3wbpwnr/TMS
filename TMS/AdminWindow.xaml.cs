@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Contexts;
@@ -43,7 +47,7 @@ namespace TMS
         {
             LoadLogFile();
         }
-        
+
         // load contents into the logfile list
         private void LoadLogFile()
         {
@@ -68,9 +72,46 @@ namespace TMS
             cw.ShowDialog();
         }
 
+
+
         private void btnBackup_Click(object sender, RoutedEventArgs e)
         {
-            //stream read & write 
+            string path;
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "(*.sql)|*.sql";
+            if (sfd.ShowDialog() == true)
+            {
+                path = sfd.FileName;
+                Backup(path);
+            }
+        }
+
+
+
+        /*
+        * Title        : void Backup()
+        * Author       : adriancs2
+        * Date         : October 18th, 2022
+        * Version      : v2.3.7
+        * Availability : https://github.com/MySqlBackupNET/MySqlBackup.Net
+        */
+        private void Backup(string file) // added a parameter take in for dynamic naming
+        {
+            string constring = "Server=127.0.0.1;Database=tms_database;Uid=SETUser;Pwd= Conestoga1;"; // our database
+            //string file = "C:\\backup.sql";
+            using (MySqlConnection conn = new MySqlConnection(constring))
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = conn;
+                        conn.Open();
+                        mb.ExportToFile(file);
+                        conn.Close();
+                    }
+                }
+            }
         }
     }
 }
