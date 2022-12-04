@@ -165,7 +165,13 @@ namespace TMS
             //put this order into the new inprogress order table with the added total and numoftrips as new columns
             tmsDB.InsertProcessOrder(inprogressOrder.ClientName, inprogressOrder.JobType, inprogressOrder.Quantity, inprogressOrder.Origin, inprogressOrder.Destination, inprogressOrder.TruckType, Total, numOfTrips);
             //ADD IN CHANGING OF BUTTONS!!!!!
+            btnAddTrip.IsEnabled = false;
+            btnRecOrder.IsEnabled = true;
+            initOrders.Items.Clear();
 
+            //remove from new orders
+
+            tmsDB.DeleteNewOrder(inprogressOrder.OrderId.ToString());
         }
     }
 }

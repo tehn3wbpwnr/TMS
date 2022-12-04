@@ -97,6 +97,22 @@ namespace TMS.Classes
             conn.Close();
         }
 
+        public void DeleteNewOrder(string orderID)
+        {
+
+            String sqlStatem = "DELETE FROM new_orders WHERE newOrderID=" + orderID;
+            adpt = new MySqlDataAdapter();
+
+            cmd = new MySqlCommand(sqlStatem, conn);
+
+            conn.Open();
+            adpt.DeleteCommand = cmd;
+            adpt.DeleteCommand.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+
         //public void DeleteStatement()
         //{
 
