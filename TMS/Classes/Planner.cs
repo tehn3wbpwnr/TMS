@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMS.Classes;
 
 namespace TMS
 {
@@ -35,6 +36,27 @@ namespace TMS
         {
             bool orderReceived = false;
             return orderReceived;
+        }
+
+        public bool isEastBound(Order inprogressOrder)
+        {
+            //figure out if trip is going east or west
+            bool eastTrip = true;
+            foreach (City city in RouteTable.corridor)
+            {
+                if (city.city == inprogressOrder.Origin)
+                {
+                    //origin found first
+                    break;
+                }
+                else if (city.city == inprogressOrder.Destination)
+                {
+                    //destination found first
+                    eastTrip = false;
+                    break;
+                }
+            }
+            return eastTrip;
         }
     }
 }
