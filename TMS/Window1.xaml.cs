@@ -44,7 +44,11 @@ namespace TMS
             dt.Columns.Add("West City");
             dt.Columns.Add("East City");
 
-            dt.Rows.Add(RouteTable.corridor.IndexOf();
+            foreach (City city in RouteTable.corridor)
+            {
+                dt.Rows.Add(city.city, city.distance.ToString(), city.time.ToString(), city.westCity, city.eastCity);          
+            }
+            dataShow.ItemsSource = dt.DefaultView;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
