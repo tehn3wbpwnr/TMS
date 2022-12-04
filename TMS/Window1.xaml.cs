@@ -38,7 +38,13 @@ namespace TMS
 
         private void btnRouteTable_Click(object sender, RoutedEventArgs e)
         {
+            dt.Columns.Add("City");
+            dt.Columns.Add("Distance");
+            dt.Columns.Add("Time");
+            dt.Columns.Add("West City");
+            dt.Columns.Add("East City");
 
+            dt.Rows.Add(RouteTable.corridor.IndexOf();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
