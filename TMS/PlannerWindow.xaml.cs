@@ -27,6 +27,7 @@ namespace TMS
         TmsDatabase tmsDB = new TmsDatabase();
         DataTable dt = new DataTable();
         Order inprogressOrder;
+        Planner planner = new Planner();
 
         public PlannerWindow()
         {
@@ -99,10 +100,49 @@ namespace TMS
             //get selected row
             DataRowView row = initOrders.SelectedItems[0] as DataRowView;
 
-            if(inprogressOrder.JobType == 0)//0 is an FTL truck
+            bool isEastBound = planner.isEastBound(inprogressOrder);
+
+
+            int kmTotal = 0;
+            double timeTotal = 0;
+
+            if (isEastBound)
+            {
+                for (int index = RouteTable.corridor.FindIndex(a => a.city.Contains(inprogressOrder.Origin)); index < RouteTable.corridor.Count; index++)
+                {
+                    if (RouteTable.corridor[index].city.Contains(inprogressOrder.Destination))
+                    {
+                        break;
+                    }
+                    kmTotal += RouteTable.corridor[index].distance;
+                    timeTotal += RouteTable.corridor[index].time;
+                }
+            }
+            else
+            {
+                //westbound start from end and count down
+                for (int index = RouteTable.corridor.FindIndex(a => a.city.Contains(inprogressOrder.Origin)); index >= 0; index--)
+                {
+                    
+                    kmTotal += RouteTable.corridor[index].distance;
+                    timeTotal += RouteTable.corridor[index].time;
+
+                    //if check after addition due to table setup
+                    if (RouteTable.corridor[index].city.Contains(inprogressOrder.Destination))
+                    {
+                        break;
+                    }
+                }
+            }
+
+
+
+
+            if (inprogressOrder.JobType == 0)//0 is an FTL truck
             {
                 //get selected carriers FTL rate
                 decimal ftlRate = decimal.Parse(row.Row.ItemArray[2].ToString());
+                
 
             }
             else// LTL truck
