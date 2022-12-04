@@ -27,6 +27,7 @@ namespace TMS
         TmsDatabase tmsDB = new TmsDatabase();
         DataTable dt = new DataTable();
         Order inprogressOrder;
+
         public PlannerWindow()
         {
             InitializeComponent();
@@ -44,6 +45,8 @@ namespace TMS
             // connect method 
             tmsDB.getNewOrders(dt);
             initOrders.ItemsSource = dt.DefaultView;
+            btnCheckCarriers.IsEnabled = true;
+            btnRecOrder.IsEnabled = false;
         }
         private void btnViewCompleted_Click(object sender, RoutedEventArgs e)
         {
@@ -87,11 +90,25 @@ namespace TMS
 
             //store temporarily
             inprogressOrder = selectedOrder;
+            btnCheckCarriers.IsEnabled = false;
+            btnAddTrip.IsEnabled = true;
         }
 
         private void btnAddTrip_Click(object sender, RoutedEventArgs e)
         {
+            //get selected row
+            DataRowView row = initOrders.SelectedItems[0] as DataRowView;
 
+            if(inprogressOrder.JobType == 0)//0 is an FTL truck
+            {
+                //get selected carriers FTL rate
+                decimal ftlRate = decimal.Parse(row.Row.ItemArray[2].ToString());
+
+            }
+            else// LTL truck
+            {
+
+            }
         }
     }
 }
