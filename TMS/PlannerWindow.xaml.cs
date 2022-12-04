@@ -28,6 +28,7 @@ namespace TMS
         DataTable dt = new DataTable();
         Order inprogressOrder;
         Planner planner = new Planner();
+        DataTable carrierTable;
 
         public PlannerWindow()
         {
@@ -44,6 +45,7 @@ namespace TMS
         {
             table = 1;
             // connect method 
+            dt.Clear();
             tmsDB.getNewOrders(dt);
             initOrders.ItemsSource = dt.DefaultView;
             btnCheckCarriers.IsEnabled = true;
@@ -86,7 +88,7 @@ namespace TMS
                                  row.Row.ItemArray[5].ToString(),
                                  int.Parse(row.Row.ItemArray[6].ToString()));
             //find carriers with matching origin city
-            DataTable carrierTable = tmsDB.getCarriers(selectedOrder.Origin);
+            carrierTable = tmsDB.getCarriers(selectedOrder.Origin);
             initOrders.ItemsSource = carrierTable.DefaultView;
 
             //store temporarily
@@ -161,13 +163,13 @@ namespace TMS
 
             inprogressOrder.CarrierTotal = Total;
             inprogressOrder.NumOfTrips = numOfTrips;
-
+            carrierTable.Clear();
+            
             //put this order into the new inprogress order table with the added total and numoftrips as new columns
             tmsDB.InsertProcessOrder(inprogressOrder.ClientName, inprogressOrder.JobType, inprogressOrder.Quantity, inprogressOrder.Origin, inprogressOrder.Destination, inprogressOrder.TruckType, Total, numOfTrips);
-            //ADD IN CHANGING OF BUTTONS!!!!!
+
             btnAddTrip.IsEnabled = false;
             btnRecOrder.IsEnabled = true;
-            initOrders.Items.Clear();
 
             //remove from new orders
 
