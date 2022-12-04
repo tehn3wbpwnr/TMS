@@ -26,7 +26,7 @@ namespace TMS
         private static int table = 0;
         TmsDatabase tmsDB = new TmsDatabase();
         DataTable dt = new DataTable();
-        List<Order> orders = new List<Order>();
+        Order inprogressOrder;
         public PlannerWindow()
         {
             InitializeComponent();
@@ -82,9 +82,16 @@ namespace TMS
                                  row.Row.ItemArray[5].ToString(),
                                  int.Parse(row.Row.ItemArray[6].ToString()));
             //find carriers with matching origin city
+            DataTable carrierTable = tmsDB.getCarriers(selectedOrder.Origin);
+            initOrders.ItemsSource = carrierTable.DefaultView;
 
-            //finally add order to list in memory while window is open when a button is clicked later this list will be added to DB and deleted from memory.
-            orders.Add(selectedOrder);
+            //store temporarily
+            inprogressOrder = selectedOrder;
+        }
+
+        private void btnAddTrip_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

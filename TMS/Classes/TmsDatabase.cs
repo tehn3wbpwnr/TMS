@@ -40,11 +40,48 @@ namespace TMS.Classes
             return dt;
         }
 
-        public void InsertStatement(string client, int jobType, int quantity, string origin, string destination, int vanType)
+        public DataTable getCarriers(string originCity)
+        {
+            DataTable dt = new DataTable();
+            string sqlStatem = "SELECT * from Carriers WHERE dcity='" + originCity + "'";
+            try
+            {
+                conn.Open();
+                using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatem, conn))
+                    da.Fill(dt);
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
+        }
+
+        public void InsertNewOrder(string client, int jobType, int quantity, string origin, string destination, int vanType)
         {
 
             //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
             string sql = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (@client, @jobType, @quantity, @origin, @destination, @vanType);";
+            conn.Open();
+            using (var command = new MySqlCommand(sql, conn))
+            {
+                command.Parameters.Add("@client", MySqlDbType.VarChar).Value = client;
+                command.Parameters.Add("@jobtype", MySqlDbType.VarChar).Value = jobType;
+                command.Parameters.Add("@quantity", MySqlDbType.VarChar).Value = quantity;
+                command.Parameters.Add("@origin", MySqlDbType.VarChar).Value = origin;
+                command.Parameters.Add("@destination", MySqlDbType.VarChar).Value = destination;
+                command.Parameters.Add("@vanType", MySqlDbType.VarChar).Value = vanType;
+                command.ExecuteNonQuery();
+            }
+            conn.Close();
+        }
+
+        public void InsertProcessOrder(string client, int jobType, int quantity, string origin, string destination, int vanType)
+        {
+
+            //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
+            string sql = "INSERT INTO process_orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (@client, @jobType, @quantity, @origin, @destination, @vanType);";
             conn.Open();
             using (var command = new MySqlCommand(sql, conn))
             {
