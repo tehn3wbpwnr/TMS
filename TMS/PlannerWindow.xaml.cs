@@ -26,9 +26,11 @@ namespace TMS
         private static int table = 0;
         TmsDatabase tmsDB = new TmsDatabase();
         DataTable dt = new DataTable();
+        List<Order> orders = new List<Order>();
         public PlannerWindow()
         {
             InitializeComponent();
+            tmsDB.Connection();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -40,7 +42,6 @@ namespace TMS
         {
             table = 1;
             // connect method 
-            tmsDB.Connection();
             tmsDB.getNewOrders(dt);
             initOrders.ItemsSource = dt.DefaultView;
         }
@@ -51,11 +52,6 @@ namespace TMS
         }
 
         private void btnOneDay_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnAddTrip_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -75,6 +71,20 @@ namespace TMS
             DataTable dt = new DataTable();
         }
 
-        
+        private void btnCheckCarriers_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView row = initOrders.SelectedItems[0] as DataRowView;
+            Order selectedOrder = new Order(int.Parse(row.Row.ItemArray[0].ToString()),
+                                 row.Row.ItemArray[1].ToString(),
+                                 int.Parse(row.Row.ItemArray[2].ToString()),
+                                 int.Parse(row.Row.ItemArray[3].ToString()),
+                                 row.Row.ItemArray[4].ToString(),
+                                 row.Row.ItemArray[5].ToString(),
+                                 int.Parse(row.Row.ItemArray[6].ToString()));
+            //find carriers with matching origin city
+
+            //finally add order to list in memory while window is open when a button is clicked later this list will be added to DB and deleted from memory.
+            orders.Add(selectedOrder);
+        }
     }
 }
