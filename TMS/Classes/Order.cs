@@ -18,6 +18,7 @@ namespace TMS
         private int truckType;
         private int numOfTrips;
         private string carrier;
+        private decimal carrierTotal;
         public string ClientName { get { return clientName; } set { clientName = value; } }
         public int OrderId { get { return orderId; } set { orderId = value; } }
         public int JobType { get { return jobType; } set { jobType = value; } }
@@ -27,8 +28,8 @@ namespace TMS
         public bool Complete { get { return complete; } set { complete = value; } }
         public int NumOfTrips { get { return numOfTrips; } set { numOfTrips = value; } }
         public int Quantity { get { return quantity; } set { quantity = value; } }
-        public decimal orderTotal { get { return orderTotal; } set { orderTotal = value; } }
         public string Carrier { get { return carrier; } set { carrier = value; } }
+        public decimal CarrierTotal { get { return carrierTotal; } set { carrierTotal = value; } }
 
 
         public Order(string client, int jobType, int quantity, string origin, string destination, int vanType)

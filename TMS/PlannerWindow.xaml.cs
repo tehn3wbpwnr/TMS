@@ -121,7 +121,7 @@ namespace TMS
             else
             {
                 //westbound start from end and count down
-                for (int index = RouteTable.corridor.FindIndex(a => a.city.Contains(inprogressOrder.Origin)); index >= 0; index--)
+                for (int index = (RouteTable.corridor.FindIndex(a => a.city.Contains(inprogressOrder.Origin)) - 1); index >= 0; index--)
                 {
                     
                     kmTotal += RouteTable.corridor[index].distance;
@@ -137,18 +137,33 @@ namespace TMS
 
 
 
-
+            decimal Total
             if (inprogressOrder.JobType == 0)//0 is an FTL truck
             {
                 //get selected carriers FTL rate
-                decimal ftlRate = decimal.Parse(row.Row.ItemArray[2].ToString());
-                
+                decimal ftlRate = decimal.Parse(row.Row.ItemArray[4].ToString());
+                Total = ftlRate * kmTotal;
 
             }
             else// LTL truck
             {
-
+                decimal ltlRate = decimal.Parse(row.Row.ItemArray[5].ToString());
+                Total = ltlRate * kmTotal;
             }
+
+            int numOfTrips = 1;
+
+            if(timeTotal > 8)
+            {
+                numOfTrips++;//doesn't currently count load/unload just drive time
+            }
+
+
+            inprogressOrder.CarrierTotal = Total;
+            inprogressOrder.NumOfTrips = numOfTrips;
+
+            //put this order into the new inprogress order table with the added total and numoftrips as new columns
+
         }
     }
 }
