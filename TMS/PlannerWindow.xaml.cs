@@ -47,7 +47,7 @@ namespace TMS
             table = 1;
             // connect method 
             processTable.Clear();
-            tmsDB.getNewOrders(processTable);
+            tmsDB.GetNewOrders(processTable);
             initOrders.ItemsSource = processTable.DefaultView;
             btnCheckCarriers.IsEnabled = true;
             btnRecOrder.IsEnabled = false;
@@ -93,7 +93,7 @@ namespace TMS
                                  row.Row.ItemArray[5].ToString(),
                                  int.Parse(row.Row.ItemArray[6].ToString()));
             //find carriers with matching origin city
-            carrierTable = tmsDB.getCarriers(selectedOrder.Origin);
+            carrierTable = tmsDB.GetCarriers(selectedOrder.Origin);
             initOrders.ItemsSource = carrierTable.DefaultView;
 
             //store temporarily
