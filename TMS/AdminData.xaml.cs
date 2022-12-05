@@ -92,12 +92,15 @@ namespace TMS
                 }
                 if (txtFTLMarkup.Text != "")
                 {
-                    RateFee.FTLMarkUp = decimal.Parse(txtFTLMarkup.Text);
+
+                    RateFee.FTLMarkup = decimal.Parse(txtFTLMarkup.Text);
+
                     newValueSet = true;
                 }
                 if (txtLTLMarkup.Text != "")
                 {
-                    RateFee.LTLMarkUp = decimal.Parse(txtLTLMarkup.Text);
+                    RateFee.LTLMarkup = decimal.Parse(txtLTLMarkup.Text);
+
                     newValueSet = true;
                 }
 
@@ -149,7 +152,9 @@ namespace TMS
             dt.Columns.Add("LTL Avg Rate");
             dt.Columns.Add("FTL Markup Rate");
             dt.Columns.Add("LTL Markup Rate");
-            dt.Rows.Add(RateFee.FTLRates, RateFee.LTLRates, RateFee.FTLMarkUp, RateFee.LTLMarkUp);
+
+            dt.Rows.Add(RateFee.FTLRates, RateFee.LTLRates, RateFee.FTLMarkup, RateFee.LTLMarkup);
+
             dataRate.ItemsSource = dt.DefaultView;
         }
 
