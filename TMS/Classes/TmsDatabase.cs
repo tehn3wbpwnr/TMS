@@ -2,13 +2,14 @@
  * File         : TmsDatabase.cs
  * Project      : Milestone 4
  * Programmer   : Alex Silveira, Emanuel Juracic, Josh Moore
- * First Version:
+ * First Version: November 10th 2022
  * Description  : This class involves establishing a connection and utilizing various queries related the local TMS Database
  */
 
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,8 @@ namespace TMS.Classes
         MySqlDataReader rdr = null;
         MySqlDataAdapter adpt = null;
 
+        private const string TMS_IP_KEY = "DB_IPAddress";
+        private string ip = ConfigurationManager.AppSettings[TMS_IP_KEY];
 
         /*
          * Method      : Connection
@@ -39,7 +42,7 @@ namespace TMS.Classes
             //try catch blocks used for error checking and validation
             try
             {
-                string connect = "Server=127.0.0.1;Database=tms_database;Uid=SETUser;Pwd= Conestoga1;"; //string containing the connection path
+                string connect = "Server=" + ip + ";Database=tms_database;Uid=SETUser;Pwd= Conestoga1;"; //string containing the connection path
                 conn = new MySqlConnection(connect);    //establish the connection
             }
             //any issues will generate a message to the user

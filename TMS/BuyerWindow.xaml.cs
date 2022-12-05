@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,8 @@ namespace TMS
 
         DataTable completedContracts = new DataTable();
 
+        private const string MARKET_IP = "MP_IPAddress";
+        private string ip = ConfigurationManager.AppSettings[MARKET_IP];
         //methods
 
         /*
@@ -46,6 +49,7 @@ namespace TMS
          * Parameters  : N/A
          * Returns     : N/A
         */
+
         public BuyerWindow()
         {
             InitializeComponent();
@@ -78,7 +82,7 @@ namespace TMS
             loadedContracts.Rows.Clear();
             dataContractMarket.Visibility = Visibility.Visible;
             ContractMarketplace contractMarketplace = new ContractMarketplace();
-            string connect = "Server=159.89.117.198;Database=cmp;Uid=DevOSHT;Pwd= Snodgr4ss!;";
+            string connect = "Server=" + ip + ";Database=cmp;Uid=DevOSHT;Pwd= Snodgr4ss!;";
             string statement = "SELECT * FROM Contract;";
 
             loadedContracts = contractMarketplace.SetUpConnection(loadedContracts, connect, statement);
