@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMS.Classes;
 
 namespace TMS
 {
@@ -23,6 +25,35 @@ namespace TMS
             SalesTaxTotal = salesTaxTotal;
             FinalTotal = finalTotal;
             Date = date;
-        }   
+        }  
+        
+        public void GenerateInvoiceText()
+        {
+            string fileName = "Order-" + OrderID + " Invoice.txt";
+            StreamWriter writer = null;
+            try
+            {
+                writer = new StreamWriter(fileName);
+                writer.WriteLine("Invoice for Order: " +OrderID + " on " + Date);
+                writer.WriteLine("Carrier charge: $" + CarrierTotal);
+                writer.WriteLine("TMS Mark Up: $" + MarkUpTotal);
+                writer.WriteLine("Sales Tax: $" + SalesTaxTotal);
+                writer.WriteLine("Total Cost: $" + FinalTotal);
+                writer.Close();
+            }
+            catch (Exception e)
+            {
+                //handle possible exception
+                Logger log = new Logger();
+                log.WriteLog(e.ToString());
+            }
+            finally
+            {
+                if (writer != null)
+                {
+                    writer.Close();
+                }
+            }
+        }
     }
 }
