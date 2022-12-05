@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TMS"
         mc:Ignorable="d"
         Title="AdminWindow" Height="450" Width="800">
-    <Grid>
+    <Canvas>
         <Button x:Name="btnTMS_Data" Content="TMS Data" HorizontalAlignment="Left" Margin="483,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnTMS_Data_Click"/>
         <Button x:Name="btnBackup" Content="Backup" HorizontalAlignment="Left" Margin="579,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnBackup_Click"/>
         <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="672,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnSettings_Click"/>
@@ -19,5 +19,5 @@
         </DataGrid>
         <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="680,102,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnRefresh_Click"/>
 
-    </Grid>
+    </Canvas>
 </Window>
