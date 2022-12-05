@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * File         : City.cs
+ * Project      : Milestone 4
+ * Programmer   : Alex Silveira, Emanuel Juracic, Josh Moore
+ * First Version:
+ * Description  : This class is basically a container for city information that is later held in a list
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +13,8 @@ using System.Threading.Tasks;
 
 namespace TMS.Classes
 {
+    // Name     : City
+    // Purpose  : The purpose of this class is to essentially be a partial container for citys, which are later held in a static list
     internal class City
     {
         public string city;
