@@ -9,17 +9,17 @@ namespace TMS.Classes
 {
     static internal class RateFee
     {
-        public static string FTLRates;
-        public static string LTLRates;
-        public static string FTLMarkup;
-        public static string LTLMarkup; 
+        public static decimal FTLRates;
+        public static decimal LTLRates;
+        public static decimal FTLMarkup;
+        public static decimal LTLMarkup; 
 
         static RateFee()
         {
-            FTLRates = "4.985";
-            LTLRates = "0.2995";
-            FTLMarkup = "0.08";
-            LTLMarkup = "0.05";
+            FTLRates = (decimal)4.985;
+            LTLRates = (decimal)0.2995;
+            FTLMarkup = (decimal)0.08;
+            LTLMarkup = (decimal)0.05;
         }
     }
 }

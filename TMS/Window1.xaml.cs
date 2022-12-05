@@ -80,22 +80,22 @@ namespace TMS
 
             if (txtFTLRate.Text != "")
             {
-                RateFee.FTLRates = txtFTLRate.Text;
+                RateFee.FTLRates = decimal.Parse(txtFTLRate.Text);
                 newValueSet = true;
             }
             if (txtLTLRate.Text != "")
             {
-                RateFee.LTLRates = txtLTLRate.Text;
+                RateFee.LTLRates = decimal.Parse(txtLTLRate.Text);
                 newValueSet = true;
             }
             if (txtFTLMarkup.Text != "")
             {
-                RateFee.FTLMarkup = txtFTLMarkup.Text;  
+                RateFee.FTLMarkup = decimal.Parse(txtFTLMarkup.Text);  
                 newValueSet = true;
             }
             if (txtLTLMarkup.Text != "")
             {
-                RateFee.LTLMarkup = txtLTLMarkup.Text;
+                RateFee.LTLMarkup = decimal.Parse(txtLTLMarkup.Text);
                 newValueSet = true;
             }
 
