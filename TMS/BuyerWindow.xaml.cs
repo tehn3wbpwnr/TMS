@@ -25,6 +25,7 @@ namespace TMS
     public partial class BuyerWindow : Window
     {
         TmsDatabase tmsDB =  new TmsDatabase();
+        Logger log = new Logger();
         public BuyerWindow()
         {
             InitializeComponent();
@@ -52,6 +53,7 @@ namespace TMS
             string statement = "SELECT * FROM Contract;";
 
             loadedContracts = contractMarketplace.SetUpConnection(loadedContracts, connect, statement);
+            log.WriteLog("Contracts successfully pulled from Contract MarketPlace");
 
             dataContractMarket.ItemsSource = loadedContracts.DefaultView;
             dataCompletedOrders.Visibility = Visibility.Hidden;
@@ -74,7 +76,9 @@ namespace TMS
                                        row.Row.ItemArray[4].ToString(),
                                        int.Parse(row.Row.ItemArray[5].ToString()));
             tmsDB.Connection();
+
             tmsDB.InsertNewOrder(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
+            log.WriteLog("Order was created for " + newOrder.ClientName);
 
             btnCreateOrder.IsEnabled = false;
         }
@@ -136,7 +140,7 @@ namespace TMS
 
             //create invoice
             Invoice newInvoice = new Invoice(tempOrder.OrderId, tempOrder.CarrierTotal, markUp, salesTax, finalTotal, date);
-
+            log.WriteLog("Invoice was created with orderID: " + tempOrder.OrderId);
             //push invoice to db
 
             tmsDB.InsertNewInvoice(newInvoice.OrderID, newInvoice.CarrierTotal, newInvoice.MarkUpTotal, newInvoice.SalesTaxTotal, newInvoice.FinalTotal, newInvoice.Date);
