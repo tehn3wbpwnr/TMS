@@ -125,6 +125,9 @@ namespace TMS
 
             tmsDB.InsertNewInvoice(newInvoice.OrderID, newInvoice.CarrierTotal, newInvoice.MarkUpTotal, newInvoice.SalesTaxTotal, newInvoice.FinalTotal, newInvoice.Date);
 
+            //write to file
+            newInvoice.GenerateInvoiceText();
+
             //delete order from completed order table
             tmsDB.DeleteCompletedOrder(newInvoice.OrderID.ToString());
         }
