@@ -18,8 +18,15 @@ namespace TMS.Classes
 
         public void Connection()
         {
-            string connect = "Server=127.0.0.1;Database=tms_database;Uid=SETUser;Pwd= Conestoga1;";
-            conn = new MySqlConnection(connect);
+            try
+            {
+                string connect = "Server=127.0.0.1;Database=tms_database;Uid=SETUser;Pwd= Conestoga1;";
+                conn = new MySqlConnection(connect);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public DataTable getNewOrders(DataTable dt)
@@ -95,6 +102,40 @@ namespace TMS.Classes
                 command.ExecuteNonQuery();
             }
             conn.Close();
+        }
+
+        public void DeleteNewOrder(string orderID)
+        {
+
+            String sqlStatem = "DELETE FROM new_orders WHERE newOrderID=" + orderID;
+            adpt = new MySqlDataAdapter();
+
+            cmd = new MySqlCommand(sqlStatem, conn);
+
+            conn.Open();
+            adpt.DeleteCommand = cmd;
+            adpt.DeleteCommand.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
+
+        public DataTable getProcessOrders(DataTable dt)
+        {
+            string sqlStatem = "SELECT OrderID, clientName, jobType, quantity, origin, destination, vanType, carrierTotal, numOfTrips FROM Process_Orders";
+
+            try
+            {
+                conn.Open();
+                using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatem, conn))
+                    da.Fill(dt);
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
         }
 
         //public void DeleteStatement()

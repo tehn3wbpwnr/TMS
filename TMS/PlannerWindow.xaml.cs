@@ -26,8 +26,10 @@ namespace TMS
         private static int table = 0;
         TmsDatabase tmsDB = new TmsDatabase();
         DataTable dt = new DataTable();
+        DataTable processTable = new DataTable();
         Order inprogressOrder;
         Planner planner = new Planner();
+        DataTable carrierTable;
 
         public PlannerWindow()
         {
@@ -44,15 +46,20 @@ namespace TMS
         {
             table = 1;
             // connect method 
-            tmsDB.getNewOrders(dt);
-            initOrders.ItemsSource = dt.DefaultView;
+            processTable.Clear();
+            tmsDB.getNewOrders(processTable);
+            initOrders.ItemsSource = processTable.DefaultView;
             btnCheckCarriers.IsEnabled = true;
             btnRecOrder.IsEnabled = false;
+            btnInvoice.IsEnabled = false;
+            btnViewProcess.IsEnabled = false;
         }
-        private void btnViewCompleted_Click(object sender, RoutedEventArgs e)
+        private void btnViewInProcess_Click(object sender, RoutedEventArgs e)
         {
             table = 2;
-            // connect 
+            dt.Clear();
+            tmsDB.getProcessOrders(dt);
+            initOrders.ItemsSource = dt.DefaultView;
         }
 
         private void btnOneDay_Click(object sender, RoutedEventArgs e)
@@ -86,7 +93,7 @@ namespace TMS
                                  row.Row.ItemArray[5].ToString(),
                                  int.Parse(row.Row.ItemArray[6].ToString()));
             //find carriers with matching origin city
-            DataTable carrierTable = tmsDB.getCarriers(selectedOrder.Origin);
+            carrierTable = tmsDB.getCarriers(selectedOrder.Origin);
             initOrders.ItemsSource = carrierTable.DefaultView;
 
             //store temporarily
@@ -161,11 +168,18 @@ namespace TMS
 
             inprogressOrder.CarrierTotal = Total;
             inprogressOrder.NumOfTrips = numOfTrips;
-
+            carrierTable.Clear();
+            
             //put this order into the new inprogress order table with the added total and numoftrips as new columns
             tmsDB.InsertProcessOrder(inprogressOrder.ClientName, inprogressOrder.JobType, inprogressOrder.Quantity, inprogressOrder.Origin, inprogressOrder.Destination, inprogressOrder.TruckType, Total, numOfTrips);
-            //ADD IN CHANGING OF BUTTONS!!!!!
 
+            btnAddTrip.IsEnabled = false;
+            btnRecOrder.IsEnabled = true;
+            btnInvoice.IsEnabled = true;
+            btnViewProcess.IsEnabled = true;
+            //remove from new orders
+
+            tmsDB.DeleteNewOrder(inprogressOrder.OrderId.ToString());
         }
     }
 }
