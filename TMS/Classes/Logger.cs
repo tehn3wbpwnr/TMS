@@ -16,8 +16,7 @@ namespace TMS.Classes
 
         public Logger()
         {
-            FileName = ConfigurationManager.AppSettings["LogFilePath"];
-            
+            FileName = ConfigurationManager.AppSettings["LogFilePath"];          
         }
 
         public void WriteLog(string msg)

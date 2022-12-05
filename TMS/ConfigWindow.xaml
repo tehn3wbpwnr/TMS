@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMS"
         mc:Ignorable="d"
-        Title="Configuration" Height="200" Width="400">
+        Title="Configuration" Height="200" Width="450">
     <Grid>
         <Button x:Name="btnLogFilePath" Content="Change Log Path" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Click="btnLogFilePath_Click" Height="22" RenderTransformOrigin="-0.34,-1.034"/>
         <Label Content="IP Address: " HorizontalAlignment="Left" Margin="9,29,0,0" VerticalAlignment="Top"/>
