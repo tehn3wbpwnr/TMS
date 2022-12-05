@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TMS"
         mc:Ignorable="d"
         Title="AddWindow" Height="350" Width="500">
-    <Grid>
+    <Canvas>
         <Label Content="Carrier Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" Height="30"/>
         <Label Content="City" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="200" Height="30"/>
         <Label Content="Full Truck Load Availablity" HorizontalAlignment="Left" Margin=" 10,90,0,0" VerticalAlignment="Top" Width="200" Height="30"/>
@@ -22,9 +22,9 @@
         <TextBox Name="txtFTLRate" HorizontalAlignment="Left" Margin="228,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30"/>
         <TextBox Name="txtLTLRate" HorizontalAlignment="Left" Margin="228,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30"/>
         <TextBox Name="txtReefer" HorizontalAlignment="Left" Margin="228,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30"/>
-        
-        <Button Name="btnAdd" Content="Add" HorizontalAlignment="Center" Margin="0,304,0,0" VerticalAlignment="Top" Click="btnAdd_Click"/>
+
+        <Button Name="btnAdd" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnAdd_Click" Canvas.Left="224" Canvas.Top="304"/>
 
 
-    </Grid>
+    </Canvas>
 </Window>
