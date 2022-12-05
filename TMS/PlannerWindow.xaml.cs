@@ -28,6 +28,7 @@ namespace TMS
         DataTable dt = new DataTable();
         DataTable processTable = new DataTable();
         DataTable allInvoices = new DataTable();
+        DataTable twoWeeksInvoices = new DataTable();
         Order inprogressOrder;
         Planner planner = new Planner();
         DataTable carrierTable;
@@ -233,7 +234,9 @@ namespace TMS
 
         private void btnTwoWeeksInvoice_Click(object sender, RoutedEventArgs e)
         {
-
+            twoWeeksInvoices.Clear();
+            twoWeeksInvoices = tmsDB.PlannerGetTwoWeeksInvoice(twoWeeksInvoices);
+            initOrders.ItemsSource = twoWeeksInvoices.DefaultView;
         }
     }
 }
