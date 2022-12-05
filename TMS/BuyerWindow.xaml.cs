@@ -41,14 +41,14 @@ namespace TMS
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
             DataTable loadedContracts = new DataTable();
-            dataShow.Visibility = Visibility.Visible;
+            dataContractMarket.Visibility = Visibility.Visible;
             ContractMarketplace contractMarketplace = new ContractMarketplace();
             string connect = "Server=159.89.117.198;Database=cmp;Uid=DevOSHT;Pwd= Snodgr4ss!;";
             string statement = "SELECT * FROM Contract;";
 
             loadedContracts = contractMarketplace.SetUpConnection(loadedContracts, connect, statement);
 
-            dataShow.ItemsSource = loadedContracts.DefaultView;
+            dataContractMarket.ItemsSource = loadedContracts.DefaultView;
             dataCompletedOrders.Visibility = Visibility.Hidden;
 
             btnCreateOrder.IsEnabled = false; 
@@ -57,7 +57,7 @@ namespace TMS
 
         private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView row = dataShow.SelectedItems[0] as DataRowView;
+            DataRowView row = dataContractMarket.SelectedItems[0] as DataRowView;
             Order newOrder = new Order(row.Row.ItemArray[0].ToString(),
                                        int.Parse(row.Row.ItemArray[1].ToString()),
                                        int.Parse(row.Row.ItemArray[2].ToString()),
@@ -75,7 +75,7 @@ namespace TMS
             tmsDB.Connection();
             completedContracts = tmsDB.BuyerSelectCompletedOrders(completedContracts);
             dataCompletedOrders.ItemsSource = completedContracts.DefaultView;
-            dataShow.Visibility = Visibility.Hidden;
+            dataContractMarket.Visibility = Visibility.Hidden;
 
             btnCreateInvoice.IsEnabled = true;
             btnCreateOrder.IsEnabled = false; 
