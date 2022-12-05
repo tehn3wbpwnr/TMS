@@ -186,12 +186,20 @@ namespace TMS
                 //get selected carriers FTL rate
                 decimal ftlRate = decimal.Parse(row.Row.ItemArray[5].ToString());
                 Total = ftlRate * kmTotal;
+                if(inprogressOrder.TruckType == 1)
+                {
+                    Total = Total * (1 + decimal.Parse(row.Row.ItemArray[7].ToString()));
+                }
 
             }
             else// LTL truck
             {
                 decimal ltlRate = decimal.Parse(row.Row.ItemArray[6].ToString());
-                Total = ltlRate * kmTotal;
+                Total = ltlRate * kmTotal * inprogressOrder.Quantity;
+                if (inprogressOrder.TruckType == 1)
+                {
+                    Total = Total * (1 + decimal.Parse(row.Row.ItemArray[7].ToString()));
+                }
             }
 
             int numOfTrips = 1;
