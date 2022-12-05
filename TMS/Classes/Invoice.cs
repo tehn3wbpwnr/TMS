@@ -35,10 +35,10 @@ namespace TMS
             {
                 writer = new StreamWriter(fileName);
                 writer.WriteLine("Invoice for Order: " +OrderID + " on " + Date);
-                writer.WriteLine("Carrier charge: $" + CarrierTotal);
-                writer.WriteLine("TMS Mark Up: $" + MarkUpTotal);
-                writer.WriteLine("Sales Tax: $" + SalesTaxTotal);
-                writer.WriteLine("Total Cost: $" + FinalTotal);
+                writer.WriteLine("Carrier charge: $" + Math.Round(CarrierTotal,2));
+                writer.WriteLine("TMS Mark Up: $" + Math.Round(MarkUpTotal,2));
+                writer.WriteLine("Sales Tax: $" + Math.Round(SalesTaxTotal,2));
+                writer.WriteLine("Total Cost: $" + Math.Round(FinalTotal,2));
                 writer.Close();
             }
             catch (Exception e)
