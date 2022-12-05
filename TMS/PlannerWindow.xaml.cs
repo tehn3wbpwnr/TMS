@@ -32,6 +32,7 @@ namespace TMS
         Order inprogressOrder;
         Planner planner = new Planner();
         DataTable carrierTable;
+        Logger log = new Logger();
 
         public PlannerWindow()
         {
@@ -92,6 +93,7 @@ namespace TMS
                     {
                         tmsDB.DeleteProcessOrder(tempOrder.OrderId.ToString());
                         tmsDB.InsertCompletedOrder(tempOrder.OrderId,tempOrder.ClientName, tempOrder.JobType, tempOrder.Quantity, tempOrder.Origin, tempOrder.Destination, tempOrder.TruckType, tempOrder.CarrierTotal, tempOrder.NumOfTrips);
+                        log.WriteLog("OrderID: " + tempOrder.OrderId + " was successfully completed!");
                     }
                     else
                     {
@@ -104,11 +106,6 @@ namespace TMS
             tmsDB.GetProcessOrders(processTable);
             initOrders.ItemsSource = processTable.DefaultView;
             btnRecOrder.IsEnabled = true;
-        }
-
-        private void btnMarkComplete_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void btnInvoice_Click(object sender, RoutedEventArgs e)
@@ -230,6 +227,7 @@ namespace TMS
             //remove from new orders
 
             tmsDB.DeleteNewOrder(inprogressOrder.OrderId.ToString());
+            log.WriteLog("Trip was successffuly added to order number: " + inprogressOrder.OrderId);
         }
 
         private void btnTwoWeeksInvoice_Click(object sender, RoutedEventArgs e)
