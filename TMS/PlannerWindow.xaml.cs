@@ -22,11 +22,12 @@ namespace TMS
     /// </summary>
     public partial class PlannerWindow : Window
     {
-        //0 = no table //1 = initiatetd orders //2 = completed orders
+        //0 = no table //1 = initiatetd orders //2 = completed orders//3 = all invoices//4 = ast two weeks invoices
         private static int table = 0;
         TmsDatabase tmsDB = new TmsDatabase();
         DataTable dt = new DataTable();
         DataTable processTable = new DataTable();
+        DataTable allInvoices = new DataTable();
         Order inprogressOrder;
         Planner planner = new Planner();
         DataTable carrierTable;
@@ -53,7 +54,7 @@ namespace TMS
 
             btnCheckCarriers.IsEnabled = true;
             btnRecOrder.IsEnabled = false;
-            btnInvoice.IsEnabled = false;
+            btnInvoiceAll.IsEnabled = false;
             btnViewProcess.IsEnabled = false;
         }
         private void btnViewInProcess_Click(object sender, RoutedEventArgs e)
@@ -111,7 +112,9 @@ namespace TMS
 
         private void btnInvoice_Click(object sender, RoutedEventArgs e)
         {
-
+            allInvoices.Clear();
+            allInvoices = tmsDB.GetInvoice(allInvoices);
+            initOrders.ItemsSource = allInvoices.DefaultView;
         }
 
         private void updateTable(int status)
@@ -221,11 +224,16 @@ namespace TMS
 
             btnAddTrip.IsEnabled = false;
             btnRecOrder.IsEnabled = true;
-            btnInvoice.IsEnabled = true;
+            btnInvoiceAll.IsEnabled = true;
             btnViewProcess.IsEnabled = true;
             //remove from new orders
 
             tmsDB.DeleteNewOrder(inprogressOrder.OrderId.ToString());
+        }
+
+        private void btnTwoWeeksInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

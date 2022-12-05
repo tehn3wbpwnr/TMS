@@ -90,17 +90,17 @@ namespace TMS
         private void btnCreateInvoice_Click(object sender, RoutedEventArgs e)
         {
             //load row
-            DataRow row = dataCompletedOrders.SelectedItems[0] as DataRow;
+            DataRowView row = dataCompletedOrders.SelectedItems[0] as DataRowView;
             //create temp order based off of that row
-            Order tempOrder = new Order(int.Parse(row.ItemArray[0].ToString()),
-                                 row.ItemArray[1].ToString(),
-                                 int.Parse(row.ItemArray[2].ToString()),
-                                 int.Parse(row.ItemArray[3].ToString()),
-                                 row.ItemArray[4].ToString(),
-                                 row.ItemArray[5].ToString(),
-                                 int.Parse(row.ItemArray[6].ToString()),
-                                 decimal.Parse(row.ItemArray[7].ToString()),
-                                 int.Parse(row.ItemArray[8].ToString()));
+            Order tempOrder = new Order(int.Parse(row.Row.ItemArray[0].ToString()),
+                                 row.Row.ItemArray[1].ToString(),
+                                 int.Parse(row.Row.ItemArray[2].ToString()),
+                                 int.Parse(row.Row.ItemArray[3].ToString()),
+                                 row.Row.ItemArray[4].ToString(),
+                                 row.Row.ItemArray[5].ToString(),
+                                 int.Parse(row.Row.ItemArray[6].ToString()),
+                                 decimal.Parse(row.Row.ItemArray[7].ToString()),
+                                 int.Parse(row.Row.ItemArray[8].ToString()));
             //get markup
             decimal markUp;
             if(tempOrder.JobType == 0)
@@ -113,7 +113,7 @@ namespace TMS
             }
 
             //variables for invoice
-            decimal salesTax = RateFee.salesTax * (tempOrder.CarrierTotal * markUp);
+            decimal salesTax = RateFee.salesTax * ((tempOrder.CarrierTotal * markUp) + tempOrder.CarrierTotal);
             markUp = tempOrder.CarrierTotal * markUp;
             decimal finalTotal = tempOrder.CarrierTotal + markUp + salesTax;
             string date = DateTime.Now.ToString("yyyy/MM/dd");
