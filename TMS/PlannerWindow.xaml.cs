@@ -208,6 +208,7 @@ namespace TMS
             if(timeTotal > 8)
             {
                 numOfTrips++;//doesn't currently count load/unload just drive time
+                Total = Total + 150;
             }
 
 

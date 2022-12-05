@@ -8,9 +8,21 @@ namespace TMS
 {
     internal class Invoice
     {
-        private decimal totalCost;
-        private int invoiceID;
-        private int orderID;
-        private int buyerID;
+        public int OrderID { get; set; }
+        public decimal CarrierTotal { get; set; }
+        public decimal MarkUpTotal  { get; set; }
+        public decimal SalesTaxTotal { get; set; }
+        public decimal FinalTotal { get; set; }
+        public string Date { get; set; }
+
+        public Invoice(int orderID, decimal carrierTotal, decimal markUpTotal, decimal salesTaxTotal, decimal finalTotal, string date)
+        {
+            OrderID = orderID;
+            CarrierTotal = carrierTotal;
+            MarkUpTotal = markUpTotal;
+            SalesTaxTotal = salesTaxTotal;
+            FinalTotal = finalTotal;
+            Date = date;
+        }   
     }
 }
