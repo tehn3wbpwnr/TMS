@@ -5,34 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMS"
         mc:Ignorable="d"
-        Title="TMS Data" Height="450" Width="800" ResizeMode="NoResize">
-    <Grid>
+
+        Title="TMS Data" Height="500" Width="800" ResizeMode="NoResize">
+    <Canvas>
         <Label Content="TMS: Data" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
-        <DataGrid Name="dataCarrier" Height="Auto" Width="Auto" Margin="30,120,30,153" IsReadOnly="True" Visibility="Hidden"/>
-        <DataGrid Name="dataRate" Height="Auto" Width="Auto" Margin="30,120,30,153" IsReadOnly="True" Visibility="Hidden"/>
-        <DataGrid Name="dataRoutes" Height="Auto" Width="Auto" Margin="30,120,30,153" IsReadOnly="True" Visibility="Hidden"/>
+
+        <DataGrid Name="dataCarrier" Height="300" Width="750" Margin="30,120,30,22" IsReadOnly="True" Visibility="Visible" BorderThickness="5"/>
+        <DataGrid Name="dataRate" Height="200" Width="750" Margin="30,120,30,22" IsReadOnly="True" Visibility="Hidden" BorderThickness="5"/>
+        <DataGrid Name="dataRoutes" Height="200" Width="750" Margin="30,120,30,22" IsReadOnly="True" Visibility="Hidden" BorderThickness="5" />
 
         <Button Name="btnCarrierData" Content="Carrier Data" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnCarrierData_Click"/>
         <Button Name="btnRateFee" Content="Rate/Fee" HorizontalAlignment="Left" Margin="130,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRateFee_Click"/>
         <Button Name="btnRouteTable" Content="Routes" HorizontalAlignment="Left" Margin="230,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRouteTable_Click"/>
 
-        <Grid x:Name="gridButtons" Visibility="Hidden" Margin="50,285,600,10">
+        <Grid x:Name="gridButtons" Visibility="Hidden" Canvas.Left="723" Canvas.Top="15" HorizontalAlignment="Left" VerticalAlignment="Center">
+
             <Button Name="btnAdd" Content="Add" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50" Click="btnAdd_Click"/>
             <Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Click="btnDelete_Click" Margin="0,35,0,0"/>
             <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50" Click="btnUpdate_Click" Margin="0,70,0,0"/>
         </Grid>
 
-        <Grid x:Name="gridRateFee" Visibility="Hidden" Margin="18,260,432,10">
-            <Button Name="btnChange" Content="Change" HorizontalAlignment="Left" Margin="260,115,0,0" VerticalAlignment="Top" Click="btnChange_Click" RenderTransformOrigin="0.411,5.266"/>
+
+        <Grid x:Name="gridRateFee" Visibility="Hidden" Canvas.Left="30" Canvas.Top="325" HorizontalAlignment="Center" VerticalAlignment="Top" Width="531" Height="99">
+            <Button Name="btnChange" Content="Change" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Click="btnChange_Click" Height="22"/>
             <Label x:Name="lblFTLRateAvg" Content="FTL Rate Average: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblLTLRateAvg" Content="LTL Rate Average: " HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="lblFTLMarkup" Content="FTL Rate Average: " HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="lblLTLMarkup" Content="LTL Rate Average: " Margin="10,111,184,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblFTLMarkup" Content="FTL Rate Average: " HorizontalAlignment="Left" Margin="260,13,0,0" VerticalAlignment="Top" Height="28"/>
+            <Label x:Name="lblLTLMarkup" Content="LTL Rate Average: " Margin="260,43,164,0" VerticalAlignment="Top" Height="28"/>
             <TextBox Name="txtFTLRate" HorizontalAlignment="Left" Margin="125,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
             <TextBox Name="txtLTLRate" HorizontalAlignment="Left" Margin="125,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox Name="txtFTLMarkup" HorizontalAlignment="Left" Margin="125,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox Name="txtLTLMarkup" HorizontalAlignment="Left" Margin="125,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox Name="txtFTLMarkup" HorizontalAlignment="Left" Margin="372,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="19"/>
+            <TextBox Name="txtLTLMarkup" HorizontalAlignment="Left" Margin="372,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
         </Grid>
-
-    </Grid>
+    </Canvas>
 </Window>
