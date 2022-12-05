@@ -13,7 +13,7 @@
         <Button x:Name="btnInvoiceAll" Content="All Invoices" HorizontalAlignment="Left" Margin="260,85,0,0" VerticalAlignment="Top" Height="35" Width="110" Click="btnInvoice_Click"/>
         <Button x:Name="btnRecOrder" Content="Recieve Orders" HorizontalAlignment="Left" Margin="30,85,0,0" VerticalAlignment="Top" Height="35" Width="110" Click="btnRecOrder_Click"/>
 
-        <DataGrid Name="initOrders" Height="Auto" Width="Auto" AutoGenerateColumns="True" Margin="30,120,30,153" IsReadOnly="True"/>
+        <DataGrid Name="initOrders" Height="Auto" Width="Auto" AutoGenerateColumns="True" Margin="30,120,30,153" IsReadOnly="True" />
         <Button Name="btnCheckCarriers" Content="Check Carriers" HorizontalAlignment="Left" Margin="350,375,0,0" VerticalAlignment="Top" Height="35" Width="126" Click="btnCheckCarriers_Click" IsEnabled="False" />
         <Button Name="btnAddTrip" Content="Add Trip" HorizontalAlignment="Left" Margin="497,375,0,0" VerticalAlignment="Top" Height="35" Width="126" Click="btnAddTrip_Click" IsEnabled="False" />
         <Button Name="btnTwoWeeksInvoice" Content="Two Weeks Invoices" HorizontalAlignment="Left" Margin="375,85,0,0" VerticalAlignment="Top" Height="35" Width="110" Click="btnTwoWeeksInvoice_Click"/>

@@ -123,35 +123,51 @@ namespace TMS
 
         private void btnCheckCarriers_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView row = initOrders.SelectedItems[0] as DataRowView;
-            Order selectedOrder = new Order(int.Parse(row.Row.ItemArray[0].ToString()),
-                                 row.Row.ItemArray[1].ToString(),
-                                 int.Parse(row.Row.ItemArray[2].ToString()),
-                                 int.Parse(row.Row.ItemArray[3].ToString()),
-                                 row.Row.ItemArray[4].ToString(),
-                                 row.Row.ItemArray[5].ToString(),
-                                 int.Parse(row.Row.ItemArray[6].ToString()));
-            //find carriers with matching origin city
-            carrierTable = tmsDB.GetCarriers(selectedOrder.Origin);
-            initOrders.ItemsSource = carrierTable.DefaultView;
+            try
+            {
+                DataRowView row = initOrders.SelectedItems[0] as DataRowView;
+                Order selectedOrder = new Order(int.Parse(row.Row.ItemArray[0].ToString()),
+                                     row.Row.ItemArray[1].ToString(),
+                                     int.Parse(row.Row.ItemArray[2].ToString()),
+                                     int.Parse(row.Row.ItemArray[3].ToString()),
+                                     row.Row.ItemArray[4].ToString(),
+                                     row.Row.ItemArray[5].ToString(),
+                                     int.Parse(row.Row.ItemArray[6].ToString()));
+                //find carriers with matching origin city
+                carrierTable = tmsDB.GetCarriers(selectedOrder.Origin);
+                initOrders.ItemsSource = carrierTable.DefaultView;
 
-            //store temporarily
-            inprogressOrder = selectedOrder;
-            btnCheckCarriers.IsEnabled = false;
-            btnAddTrip.IsEnabled = true;
+                //store temporarily
+                inprogressOrder = selectedOrder;
+                btnCheckCarriers.IsEnabled = false;
+                btnAddTrip.IsEnabled = true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Please select a row first!");
+            }
         }
 
         private void btnAddTrip_Click(object sender, RoutedEventArgs e)
         {
             //get selected row
-            DataRowView row = initOrders.SelectedItems[0] as DataRowView;
+            DataRowView row = null;
+            try
+            {
+                row = initOrders.SelectedItems[0] as DataRowView;
+            }
+            catch
+            {
+                MessageBox.Show("Please select a carrier first!");
+                return;
+            }
 
             bool isEastBound = planner.isEastBound(inprogressOrder);
 
 
             int kmTotal = 0;
             double timeTotal = 0;
-
+            
             if (isEastBound)
             {
                 for (int index = RouteTable.corridor.FindIndex(a => a.city.Contains(inprogressOrder.Origin)); index < RouteTable.corridor.Count; index++)
@@ -184,12 +200,13 @@ namespace TMS
 
 
             decimal Total;
+
             if (inprogressOrder.JobType == 0)//0 is an FTL truck
             {
                 //get selected carriers FTL rate
                 decimal ftlRate = decimal.Parse(row.Row.ItemArray[5].ToString());
                 Total = ftlRate * kmTotal;
-                if(inprogressOrder.TruckType == 1)
+                if (inprogressOrder.TruckType == 1)
                 {
                     Total = Total * (1 + decimal.Parse(row.Row.ItemArray[7].ToString()));
                 }
@@ -204,7 +221,6 @@ namespace TMS
                     Total = Total * (1 + decimal.Parse(row.Row.ItemArray[7].ToString()));
                 }
             }
-
             int numOfTrips = 1;
 
             if(timeTotal > 8)
