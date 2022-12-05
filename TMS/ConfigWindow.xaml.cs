@@ -24,13 +24,16 @@ using System.Configuration;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
+using System.Data.SqlClient;
+using TMS.Classes;
 
 namespace TMS
 {
 
     /*
      * Class    : ConfigWindow : Window
-     * Purpose  : This class is the container for the codebehind of the ConfigWindow.xaml.
+     * Purpose  : This class is the container for the codebehind of the ConfigWindow.xaml. In this window the user can change the ip and port for the the local database 
+     *            connectivity, the market place ip and the location of the log file.
      */
     public partial class ConfigWindow : Window
     {
@@ -39,6 +42,8 @@ namespace TMS
         private const string TMS_IP_KEY = "DB_IPAddress";
         private const string TMS_PORT_KEY = "DB_Port";
         private const string IP_MP_KEY = "MP_IPAddress";
+
+        Logger log = new Logger();
 
         /*
          * Method       : ConfigWindow
@@ -52,142 +57,153 @@ namespace TMS
         }
 
         /*
-         * Method       : btnChangeIPAndPort_Click
+         * Method       : BtnChangeIPAndPort_Click
          * Description  : This function allows the user to update the up and the port for the TMS database connection
          * Parameters   : object sender
          *                RoutedEventArgs e
          * Returns      : void
          */
-        private void btnChangeIPAndPort_Click(object sender, RoutedEventArgs e)
+        private void BtnChangeIPAndPort_Click(object sender, RoutedEventArgs e)
         {
+            //variables 
+            bool writeLog = false;
+            string logContent = ""; 
+
+            //if ip address was added
             if (txtIP.Text != null)
             {
+                logContent = "TMS IP was changed from: " + ConfigurationManager.AppSettings[TMS_IP_KEY] + " to " + txtIP.Text + "";   
                 UpdateConfigKey(TMS_IP_KEY, txtIP.Text);
+                writeLog = true;                
             }
+            //if port was added
             if (txtPort.Text != null)
             {
+                logContent = "TMS Port was changed from: " + ConfigurationManager.AppSettings[TMS_PORT_KEY] + " to " + txtPort.Text + "";
                 UpdateConfigKey(TMS_PORT_KEY, txtPort.Text);
+                writeLog = true;   
             }
+            //if write log bool was set to true
+            if (writeLog == true)
+            {
+                log.WriteLog(logContent);
+            }
+           
         }
 
-
-
         /*
-         * Method       : btnLogFilePath_Click
+         * Method       : BtnLogFilePath_Click
          * Description  : This method allows the user to change the location for the LogFile.txt
          * Parameters   : object sender
          *                RoutedEventArgs e
          * Returns      : void
          */
-        private void btnLogFilePath_Click(object sender, RoutedEventArgs e)
+        private void BtnLogFilePath_Click(object sender, RoutedEventArgs e)
         {
             string newPath;
+            
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 try
                 {
-                    string oldPath = ConfigurationManager.AppSettings[LOG_KEY];
-                    string logContent = File.ReadAllText(oldPath);
+                    //local variables 
+                    string oldPath = ConfigurationManager.AppSettings[LOG_KEY]; //contents of the config key
+                    string logContent = File.ReadAllText(oldPath);              // contents of the file 
 
-                    newPath = fbd.SelectedPath;
+                    //add the new path
+                    newPath = fbd.SelectedPath;                                 
                     newPath += "\\LogFile.txt";
+                    //update the config setting
                     UpdateConfigKey(LOG_KEY, newPath);
+                    //write contents to "new " file 
                     File.WriteAllText(newPath, logContent); 
-                }
 
+                    log.WriteLog("LogFile directory changed to :" + newPath);
+                }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show("Exception: " + ex.Message); 
+                    System.Windows.MessageBox.Show("Exception: " + ex.Message);
+                    log.WriteLog(ex.Message);
                 }
             }
         }
 
         /*
-         * Method       : btnChangeMpIP_Click
+         * Method       : BtnChangeMpIP_Click
          * Description  : This method allows the user change the ip of the market place connection 
          * Parameters   : object sender
          *                RoutedEventArgs e
          * Returns      : void
          */
-        private void btnChangeMpIP_Click(object sender, RoutedEventArgs e)
+        private void BtnChangeMpIP_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(txtMpIP.Text))
             {
-                UpdateConfigKey(IP_MP_KEY, txtMpIP.Text);   
+                try
+                {
+                    UpdateConfigKey(IP_MP_KEY, txtMpIP.Text);
+                    log.WriteLog("Market Place IP");
+                }
+                catch (Exception ex)
+                {
+                    log.WriteLog(ex.Message);
+                    System.Windows.MessageBox.Show("Configuration Update Failed");
+                }
+                
             }
         }
 
 
         /*
-         * Title        :
-         * Author       :
-         * Date         : 
-         * Version      : 
-         * Availability :
+         * Title        : UpdateConfigKey
+         * Author       : Rahul Kumar Saxena
+         * Date         : September 29th, 2012
+         * Version      : 1.0
+         * Availability : https://www.c-sharpcorner.com/UploadFile/rahul4_saxena/update-app-config-key-value-at-run-time-in-wpf/
          */
         private void UpdateConfigKey(string strKey, string newValue)
-
         {
 
             XmlDocument xmlDoc = new XmlDocument();
-
             xmlDoc.Load(AppDomain.CurrentDomain.BaseDirectory + @"..\..\App.config");
-
-
 
             if (!ConfigKeyExists(strKey))
-
             {
-
                 throw new ArgumentNullException("Key", "<" + strKey + "> not find in the configuration.");
-
             }
 
             XmlNode appSettingsNode = xmlDoc.SelectSingleNode("configuration/appSettings");
 
-
-
             foreach (XmlNode childNode in appSettingsNode)
-
             {
-
                 if (childNode.Attributes["key"].Value == strKey)
-
                     childNode.Attributes["value"].Value = newValue;
-
             }
-
             xmlDoc.Save(AppDomain.CurrentDomain.BaseDirectory + @"..\..\App.config");
-
             xmlDoc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-
             System.Windows.MessageBox.Show("Application Requires Restart To Apply Changes");
-
         }
 
-        // also stolen
+
+        /*
+         * Title        : UpdateConfigKey
+         * Author       : Rahul Kumar Saxena
+         * Date         : September 29th, 2012
+         * Version      : 1.0
+         * Availability : https://www.c-sharpcorner.com/UploadFile/rahul4_saxena/update-app-config-key-value-at-run-time-in-wpf/
+         */
         private bool ConfigKeyExists(string strKey)
-
         {
-
             XmlDocument xmlDoc = new XmlDocument();
-
             xmlDoc.Load(AppDomain.CurrentDomain.BaseDirectory + @"..\..\App.config");
-
             XmlNode appSettingsNode = xmlDoc.SelectSingleNode("configuration/appSettings");
-
             foreach (XmlNode childNode in appSettingsNode)
-
             {
-
                 if (childNode.Attributes["key"].Value == strKey)
-
                     return true;
             }
-
             return false;
-
         }
     }
 }

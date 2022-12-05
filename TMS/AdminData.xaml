@@ -10,24 +10,24 @@
     <Canvas>
         <Label Content="TMS: Data" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
 
-        <DataGrid Name="dataCarrier" Height="300" Width="750" Margin="30,120,30,22" IsReadOnly="True" Visibility="Visible" BorderThickness="5"/>
+        <DataGrid Name="dataCarrier" Height="300" Width="750" Margin="30,120,30,22" IsReadOnly="True" Visibility="Visible" BorderThickness="5" SelectionChanged="DataCarrier_SelectionChanged"/>
         <DataGrid Name="dataRate" Height="200" Width="750" Margin="30,120,30,22" IsReadOnly="True" Visibility="Hidden" BorderThickness="5"/>
         <DataGrid Name="dataRoutes" Height="200" Width="750" Margin="30,120,30,22" IsReadOnly="True" Visibility="Hidden" BorderThickness="5" />
 
-        <Button Name="btnCarrierData" Content="Carrier Data" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnCarrierData_Click"/>
-        <Button Name="btnRateFee" Content="Rate/Fee" HorizontalAlignment="Left" Margin="130,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRateFee_Click"/>
-        <Button Name="btnRouteTable" Content="Routes" HorizontalAlignment="Left" Margin="230,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRouteTable_Click"/>
+        <Button Name="btnCarrierData" Content="Carrier Data" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="BtnCarrierData_Click"/>
+        <Button Name="btnRateFee" Content="Rate/Fee" HorizontalAlignment="Left" Margin="130,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="BtnRateFee_Click"/>
+        <Button Name="btnRouteTable" Content="Routes" HorizontalAlignment="Left" Margin="230,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="BtnRouteTable_Click"/>
 
         <Grid x:Name="gridButtons" Visibility="Hidden" Canvas.Left="723" Canvas.Top="15" HorizontalAlignment="Left" VerticalAlignment="Center">
 
-            <Button Name="btnAdd" Content="Add" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50" Click="btnAdd_Click"/>
-            <Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Click="btnDelete_Click" Margin="0,35,0,0"/>
-            <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50" Click="btnUpdate_Click" Margin="0,70,0,0"/>
+            <Button Name="btnAdd" Content="Add" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50" Click="BtnAdd_Click"/>
+            <Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Click="BtnDelete_Click" Margin="0,35,0,0" IsEnabled="False"/>
+            <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50" Click="BtnUpdate_Click" Margin="0,70,0,0" IsEnabled="False"/>
         </Grid>
 
 
         <Grid x:Name="gridRateFee" Visibility="Hidden" Canvas.Left="30" Canvas.Top="325" HorizontalAlignment="Center" VerticalAlignment="Top" Width="531" Height="99">
-            <Button Name="btnChange" Content="Change" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Click="btnChange_Click" Height="22"/>
+            <Button Name="btnChange" Content="Change" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Click="BtnChange_Click" Height="22"/>
             <Label x:Name="lblFTLRateAvg" Content="FTL Rate Average: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblLTLRateAvg" Content="LTL Rate Average: " HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblFTLMarkup" Content="FTL Rate Average: " HorizontalAlignment="Left" Margin="260,13,0,0" VerticalAlignment="Top" Height="28"/>

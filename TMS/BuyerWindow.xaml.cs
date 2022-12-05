@@ -38,9 +38,6 @@ namespace TMS
             tmsDB.Connection();
         }
 
-
-
-
         protected override void OnClosing(CancelEventArgs e)
         {
             LoginWindow lw = new LoginWindow();
