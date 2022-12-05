@@ -1,5 +1,13 @@
-﻿using Microsoft.Win32;
+﻿/* 
+ * File         : AdminWindow.xaml.cs
+ * Project      : Milestone 4
+ * Programmers  : Alex Silveira, Emanual Juracic, Josh Moore
+ * First Version: 12/5/2022
+ * Description  : This is the codebehind file for AdminWindow.xaml
+ */
+using Microsoft.Win32;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Math.EC;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,18 +31,36 @@ using TMS.Classes;
 
 namespace TMS
 {
-    /// <summary>
-    /// Interaction logic for Window3.xaml
-    /// </summary>
+
+    /*
+     *  Class   : AdminWindow
+     *  Purpose : The purpose of this class is to display the basic functionality to the admin. The admin can look at the TMS data, Review the logs, config connection settings and create a backup on the database. 
+     */
     public partial class AdminWindow : Window
     {
+        //logger class
+        private Logger logger = new Logger();
 
+        private const string TMS_IP_KEY = "DB_IPAddress";
+        private string ip = ConfigurationManager.AppSettings[TMS_IP_KEY];
+        /*
+        * Method       : AdminWindow -- Constructor
+        * Description  : This initializes the AdminWindow and loads the log files
+        * Parameters   : none 
+        * Returns      : void 
+        */
         public AdminWindow()
         {
             InitializeComponent();
             LoadLogFile();
         }
 
+        /*
+         * Method       : OnClosing
+         * Description  : This will open the login window instead of closing the application 
+         * Parameters   : CancelEventArgs e
+         * Returns      : void 
+         */
         protected override void OnClosing(CancelEventArgs e)
         {
             LoginWindow lw = new LoginWindow();
@@ -42,32 +68,55 @@ namespace TMS
         }
 
 
-        // this will re-load the log file
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+
+        /*
+         * Method       : btnReferesh_Click
+         * Description  : This method we reload the log file 
+         * Parameters   : object sender
+         *                RoutedEventArgs e 
+         * Returns      : void 
+         */
+        private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
             LoadLogFile();
         }
 
-        // load contents into the logfile list
+
+
+        /*
+         * Method       : LoadLogFile
+         * Description  : This will take the information from the logger class and load them into a data grid 
+         * Parameters   : none 
+         * Returns      : void 
+         */
         private void LoadLogFile()
         {
-            Logger logger = new Logger();
-            //test add log to read
-            logger.WriteLog("test log 1");
-            logger.WriteLog("test log 2");
-            //end of test
-
             dglogTable.ItemsSource = logger.LoadLogs();
             dglogTable.Items.Refresh();
         }
 
-        private void btnTMS_Data_Click(object sender, RoutedEventArgs e)
+
+        /*
+         * Method       : btnTMS_Data_Click
+         * Description  : This method opens the window for the TMS data  
+         * Parameters   : object sender
+         *                RoutedEventArgs e 
+         * Returns      : void 
+         */
+        private void BtnTMS_Data_Click(object sender, RoutedEventArgs e)
         {
             TmsDataWindow tdw = new TmsDataWindow();
             tdw.ShowDialog();
         }
 
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        /*
+         * Method       : btnSettings_Click(object sender, RoutedEventArgs e 
+         * Description  : This method allows the user to open the settings window
+         * Parameters   : object sender
+         *                RoutedEventArgs e 
+         * Returns      : void 
+         */
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
             ConfigWindow cw = new ConfigWindow();
             cw.ShowDialog();
@@ -75,7 +124,14 @@ namespace TMS
 
 
 
-        private void btnBackup_Click(object sender, RoutedEventArgs e)
+        /*
+         * Method       : btnBackup_Click
+         * Description  : This method allows the user to chose a file name & path and save a backup from mysql
+         * Parameters   : object sender
+         *                RoutedEventArgs e 
+         * Returns      : void 
+         */
+        private void BtnBackup_Click(object sender, RoutedEventArgs e)
         {
             string path;
             SaveFileDialog sfd = new SaveFileDialog();
@@ -98,20 +154,28 @@ namespace TMS
         */
         private void Backup(string file) // added a parameter take in for dynamic naming
         {
-            string constring = "Server=127.0.0.1;Database=tms_database;Uid=SETUser;Pwd= Conestoga1;"; // our database
-            //string file = "C:\\backup.sql";
-            using (MySqlConnection conn = new MySqlConnection(constring))
+            try
             {
-                using (MySqlCommand cmd = new MySqlCommand())
+                string constring = "Server=" + ip + ";Database=tms_database;Uid=SETUser;Pwd= Conestoga1;"; // our database
+                                                                                                           //string file = "C:\\backup.sql";
+                using (MySqlConnection conn = new MySqlConnection(constring))
                 {
-                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    using (MySqlCommand cmd = new MySqlCommand())
                     {
-                        cmd.Connection = conn;
-                        conn.Open();
-                        mb.ExportToFile(file);
-                        conn.Close();
+                        using (MySqlBackup mb = new MySqlBackup(cmd))
+                        {
+                            cmd.Connection = conn;
+                            conn.Open();
+                            mb.ExportToFile(file);
+                            conn.Close();
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                logger.WriteLog("Exception :" + e.Message);
+                MessageBox.Show("Failed to backup");
             }
         }
     }

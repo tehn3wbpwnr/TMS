@@ -105,11 +105,6 @@ namespace TMS
             btnRecOrder.IsEnabled = true;
         }
 
-        private void btnMarkComplete_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void btnInvoice_Click(object sender, RoutedEventArgs e)
         {
             allInvoices.Clear();

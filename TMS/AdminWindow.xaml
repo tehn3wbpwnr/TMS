@@ -7,17 +7,17 @@
         mc:Ignorable="d"
         Title="AdminWindow" Height="450" Width="800">
     <Canvas>
-        <Button x:Name="btnTMS_Data" Content="TMS Data" HorizontalAlignment="Left" Margin="483,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnTMS_Data_Click"/>
-        <Button x:Name="btnBackup" Content="Backup" HorizontalAlignment="Left" Margin="579,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnBackup_Click"/>
-        <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" Margin="672,38,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnSettings_Click"/>
+        <Button x:Name="btnTMS_Data" Content="TMS Data" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="70" Click="BtnTMS_Data_Click" Canvas.Left="491" Canvas.Top="30"/>
+        <Button x:Name="btnBackup" Content="Backup" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="70" Click="BtnBackup_Click" Canvas.Left="587" Canvas.Top="30"/>
+        <Button x:Name="btnSettings" Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="70" Click="BtnSettings_Click" Canvas.Left="680" Canvas.Top="30"/>
         <Label Content="TMS: Admin" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
 
-        <DataGrid Name="dglogTable" AutoGenerateColumns="False" Height="300" Width="700" Margin="50,100,50,30" IsReadOnly="True">
+        <DataGrid Name="dglogTable" AutoGenerateColumns="False" Height="300" Width="700" Margin="50,100,50,30" IsReadOnly="True" RenderTransformOrigin="0.504,0.519">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Log" Binding="{Binding}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="680,102,0,0" VerticalAlignment="Top" Height="25" Width="70" Click="btnRefresh_Click"/>
+        <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="70" Click="BtnRefresh_Click" Canvas.Left="680" Canvas.Top="75"/>
 
     </Canvas>
 </Window>

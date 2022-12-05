@@ -32,7 +32,8 @@ namespace TMS
 
     /*
      * Class    : ConfigWindow : Window
-     * Purpose  : This class is the container for the codebehind of the ConfigWindow.xaml.
+     * Purpose  : This class is the container for the codebehind of the ConfigWindow.xaml. In this window the user can change the ip and port for the the local database 
+     *            connectivity, the market place ip and the location of the log file.
      */
     public partial class ConfigWindow : Window
     {
@@ -56,13 +57,13 @@ namespace TMS
         }
 
         /*
-         * Method       : btnChangeIPAndPort_Click
+         * Method       : BtnChangeIPAndPort_Click
          * Description  : This function allows the user to update the up and the port for the TMS database connection
          * Parameters   : object sender
          *                RoutedEventArgs e
          * Returns      : void
          */
-        private void btnChangeIPAndPort_Click(object sender, RoutedEventArgs e)
+        private void BtnChangeIPAndPort_Click(object sender, RoutedEventArgs e)
         {
             //variables 
             bool writeLog = false;
@@ -91,13 +92,13 @@ namespace TMS
         }
 
         /*
-         * Method       : btnLogFilePath_Click
+         * Method       : BtnLogFilePath_Click
          * Description  : This method allows the user to change the location for the LogFile.txt
          * Parameters   : object sender
          *                RoutedEventArgs e
          * Returns      : void
          */
-        private void btnLogFilePath_Click(object sender, RoutedEventArgs e)
+        private void BtnLogFilePath_Click(object sender, RoutedEventArgs e)
         {
             string newPath;
             
@@ -129,13 +130,13 @@ namespace TMS
         }
 
         /*
-         * Method       : btnChangeMpIP_Click
+         * Method       : BtnChangeMpIP_Click
          * Description  : This method allows the user change the ip of the market place connection 
          * Parameters   : object sender
          *                RoutedEventArgs e
          * Returns      : void
          */
-        private void btnChangeMpIP_Click(object sender, RoutedEventArgs e)
+        private void BtnChangeMpIP_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(txtMpIP.Text))
             {

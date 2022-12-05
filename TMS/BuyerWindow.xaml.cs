@@ -32,9 +32,6 @@ namespace TMS
             btnCreateInvoice.IsEnabled = false;
         }
 
-
-
-
         protected override void OnClosing(CancelEventArgs e)
         {
             LoginWindow lw = new LoginWindow();

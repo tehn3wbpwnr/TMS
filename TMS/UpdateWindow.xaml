@@ -25,6 +25,6 @@
         <TextBox Name="txtLTLRate" HorizontalAlignment="Left" Margin="249,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30"/>
         <TextBox Name="txtReefer" HorizontalAlignment="Left" Margin="249,299,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30"/>
 
-        <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="167,366,0,0" VerticalAlignment="Top" Click="btnUpdate_Click"/>
+        <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="167,366,0,0" VerticalAlignment="Top" Click="BtnUpdate_Click"/>
     </Grid>
 </Window>
