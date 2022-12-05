@@ -78,34 +78,40 @@ namespace TMS
         {
             bool newValueSet = false;
 
-            if (txtFTLRate.Text != "")
+            try
             {
-                RateFee.FTLRates = txtFTLRate.Text;
-                newValueSet = true;
-            }
-            if (txtLTLRate.Text != "")
-            {
-                RateFee.LTLRates = txtLTLRate.Text;
-                newValueSet = true;
-            }
-            if (txtFTLMarkup.Text != "")
-            {
-                RateFee.FTLMarkup = txtFTLMarkup.Text;  
-                newValueSet = true;
-            }
-            if (txtLTLMarkup.Text != "")
-            {
-                RateFee.LTLMarkup = txtLTLMarkup.Text;
-                newValueSet = true;
-            }
+                if (txtFTLRate.Text != "")
+                {
+                    RateFee.FTLRates = decimal.Parse(txtFTLRate.Text);
+                    newValueSet = true;
+                }
+                if (txtLTLRate.Text != "")
+                {
+                    RateFee.LTLRates = decimal.Parse(txtLTLRate.Text);
+                    newValueSet = true;
+                }
+                if (txtFTLMarkup.Text != "")
+                {
+                    RateFee.FTLMarkup = decimal.Parse(txtFTLMarkup.Text);
+                    newValueSet = true;
+                }
+                if (txtLTLMarkup.Text != "")
+                {
+                    RateFee.LTLMarkup = decimal.Parse(txtLTLMarkup.Text);
+                    newValueSet = true;
+                }
 
 
-            if (newValueSet == true)
-            {
-                MessageBox.Show("Values have been updated");
-                loadRates();
+                if (newValueSet == true)
+                {
+                    MessageBox.Show("Values have been updated");
+                    loadRates();
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void loadCarrierData()
