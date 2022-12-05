@@ -25,11 +25,14 @@ namespace TMS
     public partial class BuyerWindow : Window
     {
         TmsDatabase tmsDB =  new TmsDatabase();
+        DataTable loadedContracts = new DataTable();
+        DataTable completedContracts = new DataTable();
         public BuyerWindow()
         {
             InitializeComponent();
             btnCreateOrder.IsEnabled = false;
             btnCreateInvoice.IsEnabled = false;
+            tmsDB.Connection();
         }
 
 
@@ -45,7 +48,7 @@ namespace TMS
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
-            DataTable loadedContracts = new DataTable();
+            loadedContracts.Rows.Clear();
             dataContractMarket.Visibility = Visibility.Visible;
             ContractMarketplace contractMarketplace = new ContractMarketplace();
             string connect = "Server=159.89.117.198;Database=cmp;Uid=DevOSHT;Pwd= Snodgr4ss!;";
@@ -73,9 +76,18 @@ namespace TMS
                                        row.Row.ItemArray[3].ToString(),
                                        row.Row.ItemArray[4].ToString(),
                                        int.Parse(row.Row.ItemArray[5].ToString()));
-            tmsDB.Connection();
             tmsDB.InsertNewOrder(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
 
+
+            foreach (DataRow rows in loadedContracts.Rows)
+            {
+                if (rows["Client_Name"].ToString() == row.Row.ItemArray[0].ToString() && rows["Origin"].ToString() == row.Row.ItemArray[3].ToString() && rows["Destination"].ToString() == row.Row.ItemArray[4].ToString())
+                {
+                    rows.Delete();
+                    break;
+                }
+            }
+            loadedContracts.AcceptChanges();
             btnCreateOrder.IsEnabled = false;
         }
 
@@ -83,9 +95,8 @@ namespace TMS
 
         private void btnCompletedOrders_Click(object sender, RoutedEventArgs e)
         {
-            DataTable completedContracts = new DataTable();
+            completedContracts.Rows.Clear();
             dataCompletedOrders.Visibility = Visibility.Visible;
-            tmsDB.Connection();
             completedContracts = tmsDB.BuyerSelectCompletedOrders(completedContracts);
             dataCompletedOrders.ItemsSource = completedContracts.DefaultView;
             dataContractMarket.Visibility = Visibility.Hidden;
