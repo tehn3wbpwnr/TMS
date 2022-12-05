@@ -152,7 +152,7 @@ namespace TMS.Classes
         */
         public void InsertProcessOrder(int orderid, string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips)
         {
-            string sql = "INSERT INTO process_orders (orderID, clientName, jobType, quantity, origin, destination, vanType,  carrierTotal, numOfTrips) VALUES (@orderID, @client, @jobType, @quantity, @origin, @destination, @vanType, @carrierTotal, @numOfTrips);"; //string containing the update query related to the process_orders Table
+            string sql = "INSERT INTO process_orders (orderID, clientName, jobType, quantity, origin, destination, vanType,  carrierTotal, numOfTrips) VALUES (@orderID, @client, @jobType, @quantity, @origin, @destination, @vanType, @carrierTotal, @numOfTrips);"; //string containing the INSERT query related to the process_orders Table
             //try catch block for error validation and error checking
             try
             {
@@ -181,43 +181,76 @@ namespace TMS.Classes
             }
         }
 
+
+        /*
+         * Method      : InsertCompletedOrder
+         * Description : This method utilizes an INSERT method that extracts a bunch of strings and input them into the Completed_Orders table. The values are related to a row within Process_Orders that the planner configures, adds additional columns and pushes it into the Completed_Orders table
+         * Parameters  : int orderid, string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips
+         * Returns     : None
+        */
         public void InsertCompletedOrder(int orderid, string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips)
         {
+            string sql = "INSERT INTO completed_orders (orderID, clientName, jobType, quantity, origin, destination, vanType,  carrierTotal, numOfTrips) VALUES (@orderID, @client, @jobType, @quantity, @origin, @destination, @vanType, @carrierTotal, @numOfTrips);";    //string containing the INSERT query related to the Completed_Orders Table
 
-            //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
-            string sql = "INSERT INTO completed_orders (orderID, clientName, jobType, quantity, origin, destination, vanType,  carrierTotal, numOfTrips) VALUES (@orderID, @client, @jobType, @quantity, @origin, @destination, @vanType, @carrierTotal, @numOfTrips);";
-            conn.Open();
-            using (var command = new MySqlCommand(sql, conn))
+            //try catch block for error validation and error checking
+            try
             {
-                command.Parameters.Add("@orderID", MySqlDbType.VarChar).Value = orderid;
-                command.Parameters.Add("@client", MySqlDbType.VarChar).Value = client;
-                command.Parameters.Add("@jobtype", MySqlDbType.VarChar).Value = jobType;
-                command.Parameters.Add("@quantity", MySqlDbType.VarChar).Value = quantity;
-                command.Parameters.Add("@origin", MySqlDbType.VarChar).Value = origin;
-                command.Parameters.Add("@destination", MySqlDbType.VarChar).Value = destination;
-                command.Parameters.Add("@vanType", MySqlDbType.VarChar).Value = vanType;
-                command.Parameters.Add("@carrierTotal", MySqlDbType.VarChar).Value = carrierTotal;
-                command.Parameters.Add("@numOfTrips", MySqlDbType.VarChar).Value = numOfTrips;
-                command.ExecuteNonQuery();
+                conn.Open();    //open connection
+                using (var command = new MySqlCommand(sql, conn))   //using the MySqlDataAdapter with the select statement associated with the connection
+                {
+                    //to utilize variables within MySQL queries, the following code converts the "@string" to the associated variable stemming from the parameters
+                    //this ensures that the parameter values related to the columns will be written to the table
+                    command.Parameters.Add("@orderID", MySqlDbType.VarChar).Value = orderid;
+                    command.Parameters.Add("@client", MySqlDbType.VarChar).Value = client;
+                    command.Parameters.Add("@jobtype", MySqlDbType.VarChar).Value = jobType;
+                    command.Parameters.Add("@quantity", MySqlDbType.VarChar).Value = quantity;
+                    command.Parameters.Add("@origin", MySqlDbType.VarChar).Value = origin;
+                    command.Parameters.Add("@destination", MySqlDbType.VarChar).Value = destination;
+                    command.Parameters.Add("@vanType", MySqlDbType.VarChar).Value = vanType;
+                    command.Parameters.Add("@carrierTotal", MySqlDbType.VarChar).Value = carrierTotal;
+                    command.Parameters.Add("@numOfTrips", MySqlDbType.VarChar).Value = numOfTrips;
+                    command.ExecuteNonQuery();  //execute the query
+                }
+                conn.Close();   //close connection
             }
-            conn.Close();
+            //display appropriate error message to user in case of error
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
+        /*
+         * Method      : DeleteProcessOrder
+         * Description : This method utilizes a DELETE statement to delete a row related to the orderID passed as the parameter
+         * Parameters  : string orderID
+         * Returns     : None
+        */
         public void DeleteProcessOrder(string orderID)
         {
 
-            String sqlStatem = "DELETE FROM process_orders WHERE OrderID=" + orderID;
-            adpt = new MySqlDataAdapter();
+            String sqlStatem = "DELETE FROM process_orders WHERE OrderID=" + orderID;   //string containing the DELETE statement that contains the variable of orderID containing the value of what row is gonna be deleted
 
-            cmd = new MySqlCommand(sqlStatem, conn);
+            //try catch block for error validation and error checking
+            try
+            {
+                adpt = new MySqlDataAdapter();  //instantiate a new MySqlDataAdapter
 
-            conn.Open();
-            adpt.DeleteCommand = cmd;
-            adpt.DeleteCommand.ExecuteNonQuery();
+                cmd = new MySqlCommand(sqlStatem, conn);    //utilize cmd to contain the sql statement alongside the connection
 
-            cmd.Dispose();
-            conn.Close();
+                conn.Open(); //open the connection
+                adpt.DeleteCommand = cmd;   //assign the delete command to the content of cmd (containing the DELETE string and connection
+                adpt.DeleteCommand.ExecuteNonQuery();   //execute the statement
+
+                cmd.Dispose();  //dispose of the query + connection
+                conn.Close();   //end the connection
+            }
+            //display appropriate error message to user in case of error
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /*
