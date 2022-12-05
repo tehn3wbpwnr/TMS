@@ -111,19 +111,39 @@ namespace TMS.Classes
         public void InsertNewInvoice(int orderID, decimal carrierTotal, decimal markUpTotal, decimal salesTaxTotal, decimal finalTotal, string date)
         {
             //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
-            string sql = "INSERT INTO New_Orders (orderID, carrierTotal, markUpTotal, salesTaxTotal, finalTotal, date) VALUES (@orderID, @carrierTotal, @markUpTotal, @salesTaxTotal, @finalTotal, @date);";
+            string sql = "INSERT INTO Invoice (orderID, carrierTotal, markUpTotal, salesTaxTotal, finalTotal, date) VALUES (@orderID, @carrierTotal, @markUpTotal, @salesTaxTotal, @finalTotal, @date);";
             conn.Open();
             using (var command = new MySqlCommand(sql, conn))
             {
-                command.Parameters.Add("@client", MySqlDbType.VarChar).Value = orderID;
-                command.Parameters.Add("@jobtype", MySqlDbType.VarChar).Value = carrierTotal;
-                command.Parameters.Add("@quantity", MySqlDbType.VarChar).Value = markUpTotal;
-                command.Parameters.Add("@origin", MySqlDbType.VarChar).Value = salesTaxTotal;
-                command.Parameters.Add("@destination", MySqlDbType.VarChar).Value = finalTotal;
-                command.Parameters.Add("@vanType", MySqlDbType.VarChar).Value = date;
+                command.Parameters.Add("@orderID", MySqlDbType.VarChar).Value = orderID;
+                command.Parameters.Add("@carrierTotal", MySqlDbType.VarChar).Value = carrierTotal;
+                command.Parameters.Add("@markUpTotal", MySqlDbType.VarChar).Value = markUpTotal;
+                command.Parameters.Add("@salesTaxTotal", MySqlDbType.VarChar).Value = salesTaxTotal;
+                command.Parameters.Add("@finalTotal", MySqlDbType.VarChar).Value = finalTotal;
+                command.Parameters.Add("@date", MySqlDbType.VarChar).Value = date;
                 command.ExecuteNonQuery();
             }
             conn.Close();
+        }
+
+        public DataTable GetInvoice(DataTable dt)
+        {
+            string sqlStatem = "SELECT orderID, carrierTotal, markUpTotal, salesTaxTotal, finalTotal, date FROM Invoice"; //query containing SELECT string extracting colums/values within the table of Process_Orders 
+
+            //try catch block for error validation and error checking
+            try
+            {
+                conn.Open();    //open connection
+                using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatem, conn)) //using the MySqlDataAdapter with the select statement associated with the connection
+                    da.Fill(dt);    //fill up the datatable of dt the contents of da(containing the values of Process_Orders table
+                conn.Close();   //close the connection
+            }
+            //display appropriate error message to user in case of error
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
         }
 
 
