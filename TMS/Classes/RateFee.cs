@@ -12,17 +12,17 @@ namespace TMS.Classes
 
         public static decimal FTLMarkUp = 0.08M;
         public static decimal LTLMarkUp = 0.05M;
+
         public static decimal salesTax = 0.13M;
 
-        public static decimal FTLRates;
-        public static decimal LTLRates;
+        public static decimal FTLRates = 4.985M;
+        public static decimal LTLRates = 0.2295M;
  
 
 
         static RateFee()
         {
-            FTLRates = (decimal)4.985;
-            LTLRates = (decimal)0.2995;
+
         }
     }
 }
