@@ -9,7 +9,7 @@
     <Grid>
         <Label Content="TMS: Planner" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
         <Button x:Name="btnOneDay" Content="Pass One Day" HorizontalAlignment="Left" Margin="660,59,0,0" VerticalAlignment="Top" Height="35" Width="110" Click="btnOneDay_Click"/>
-        <Button x:Name="btnViewProcess" Content="In-Progress Orders" HorizontalAlignment="Left" Margin="145,85,0,0" VerticalAlignment="Top" Height="35" Width="110" Click="btnViewCompleted_Click" />
+        <Button x:Name="btnViewProcess" Content="In-Progress Orders" HorizontalAlignment="Left" Margin="145,85,0,0" VerticalAlignment="Top" Height="35" Width="110" Click="btnViewInProcess_Click" />
         <Button x:Name="btnInvoice" Content="Invoice" HorizontalAlignment="Left" Margin="532,59,0,0" VerticalAlignment="Top" Height="35" Width="110" Click="btnInvoice_Click"/>
         <Button x:Name="btnRecOrder" Content="Recieve Orders" HorizontalAlignment="Left" Margin="30,85,0,0" VerticalAlignment="Top" Height="35" Width="110" Click="btnRecOrder_Click"/>
 
