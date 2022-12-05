@@ -53,5 +53,19 @@ namespace TMS
             this.TruckType = vanType;
             this.Complete = false;
         }
+
+        public Order(int orderID, string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips)
+        {
+            this.OrderId = orderID;
+            this.ClientName = client;
+            this.JobType = jobType;
+            this.Quantity = quantity;
+            this.Origin = origin;
+            this.Destination = destination;
+            this.TruckType = vanType;
+            this.Complete = false;
+            this.CarrierTotal = carrierTotal;
+            this.numOfTrips = numOfTrips;
+        }
     }
 }

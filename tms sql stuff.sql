@@ -12,7 +12,7 @@
 
 CREATE TABLE Process_Orders
 (
-	OrderID INT NOT NULL AUTO_INCREMENT,
+	OrderID INT,
 	clientName VARCHAR (25),
 	jobType INT,
 	quantity INT,
@@ -25,6 +25,20 @@ CREATE TABLE Process_Orders
     
 );
 
+CREATE TABLE Completed_Orders
+(
+	OrderID INT,
+	clientName VARCHAR (25),
+	jobType INT,
+	quantity INT,
+	origin VARCHAR (50),
+	destination VARCHAR (50),
+	vanType INT,
+    carrierTotal DECIMAL (10,2),
+    numOfTrips INT,
+	PRIMARY KEY (OrderID)
+    
+);
 CREATE TABLE Carriers
 (
     carrierID INT NOT NULL AUTO_INCREMENT,
@@ -76,4 +90,4 @@ VALUES ('We Haul', 'Ottawa', 11, 0, '5.2', 0, '0.065');
 INSERT INTO Carriers (cName, dCity, FTLA, LTLA, FTLRate, LTLRate, reefCharge)
 VALUES    ('We Haul', 'Toronto', 11, 0, '5.2', 0, '0.065');*/
 
-
+delete from process_orders where OrderID="*";

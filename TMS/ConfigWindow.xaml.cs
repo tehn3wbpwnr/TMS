@@ -22,6 +22,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Configuration;
 using System.Windows.Forms;
+using System.IO;
 using System.Xml;
 
 namespace TMS
@@ -80,13 +81,25 @@ namespace TMS
          */
         private void btnLogFilePath_Click(object sender, RoutedEventArgs e)
         {
-            string path;
+            string newPath;
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                // still needs to transfer contents of the file 
-                path = fbd.SelectedPath;
-                UpdateConfigKey(LOG_KEY, path);
+                try
+                {
+                    string oldPath = ConfigurationManager.AppSettings[LOG_KEY];
+                    string logContent = File.ReadAllText(oldPath);
+
+                    newPath = fbd.SelectedPath;
+                    newPath += "\\LogFile.txt";
+                    UpdateConfigKey(LOG_KEY, newPath);
+                    File.WriteAllText(newPath, logContent); 
+                }
+
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Exception: " + ex.Message); 
+                }
             }
         }
 
@@ -149,7 +162,7 @@ namespace TMS
 
             xmlDoc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
 
-            System.Windows.MessageBox.Show("Key Upated Successfullly");
+            System.Windows.MessageBox.Show("Application Requires Restart To Apply Changes");
 
         }
 

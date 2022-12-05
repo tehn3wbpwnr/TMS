@@ -29,22 +29,25 @@ namespace TMS
         {
             DataTable dt = new DataTable();
             loadCarrierData();
+
             dataCarrier.Visibility = Visibility.Visible;
             dataRoutes.Visibility = Visibility.Hidden;
             dataRate.Visibility = Visibility.Hidden;
+
+            gridButtons.Visibility = Visibility.Visible;
+            gridRateFee.Visibility = Visibility.Hidden;
         }
 
         private void btnRateFee_Click(object sender, RoutedEventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("FTL Avg Rate");
-            dt.Columns.Add("LTL Avg Rate");
-            dt.Rows.Add(RateFee.rates[0], RateFee.rates[1]);
-            dataRate.ItemsSource = dt.DefaultView;
+            loadRates();
 
             dataCarrier.Visibility = Visibility.Hidden;
             dataRoutes.Visibility = Visibility.Hidden;
             dataRate.Visibility = Visibility.Visible;
+
+            gridButtons.Visibility = Visibility.Hidden;
+            gridRateFee.Visibility = Visibility.Visible;
         }
 
         private void btnRouteTable_Click(object sender, RoutedEventArgs e)
@@ -58,19 +61,62 @@ namespace TMS
 
             foreach (City city in RouteTable.corridor)
             {
-                dt.Rows.Add(city.city, city.distance.ToString(), city.time.ToString(), city.westCity, city.eastCity);          
+                dt.Rows.Add(city.city, city.distance.ToString(), city.time.ToString(), city.westCity, city.eastCity);
             }
             dataRoutes.ItemsSource = dt.DefaultView;
 
             dataCarrier.Visibility = Visibility.Hidden;
             dataRoutes.Visibility = Visibility.Visible;
             dataRate.Visibility = Visibility.Hidden;
+
+            gridButtons.Visibility = Visibility.Hidden;
+            gridRateFee.Visibility = Visibility.Hidden;
         }
 
 
+        private void btnChange_Click(object sender, RoutedEventArgs e)
+        {
+            bool newValueSet = false;
+
+            try
+            {
+                if (txtFTLRate.Text != "")
+                {
+                    RateFee.FTLRates = decimal.Parse(txtFTLRate.Text);
+                    newValueSet = true;
+                }
+                if (txtLTLRate.Text != "")
+                {
+                    RateFee.LTLRates = decimal.Parse(txtLTLRate.Text);
+                    newValueSet = true;
+                }
+                if (txtFTLMarkup.Text != "")
+                {
+                    RateFee.FTLMarkup = decimal.Parse(txtFTLMarkup.Text);
+                    newValueSet = true;
+                }
+                if (txtLTLMarkup.Text != "")
+                {
+                    RateFee.LTLMarkup = decimal.Parse(txtLTLMarkup.Text);
+                    newValueSet = true;
+                }
+
+
+                if (newValueSet == true)
+                {
+                    MessageBox.Show("Values have been updated");
+                    loadRates();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void loadCarrierData()
         {
-            DataTable dt = new DataTable();    
+            DataTable dt = new DataTable();
             TmsDatabase tms = new TmsDatabase();
             tms.Connection();
             dt = tms.AdminSelectCarrier(dt);
@@ -80,7 +126,8 @@ namespace TMS
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             AddWindow aw = new AddWindow();
-            aw.Show();
+            aw.ShowDialog();
+            loadCarrierData();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -94,6 +141,18 @@ namespace TMS
                 loadCarrierData();
             }
         }
+
+        private void loadRates()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("FTL Avg Rate");
+            dt.Columns.Add("LTL Avg Rate");
+            dt.Columns.Add("FTL Markup Rate");
+            dt.Columns.Add("LTL Markup Rate");
+            dt.Rows.Add(RateFee.FTLRates, RateFee.LTLRates, RateFee.FTLMarkup, RateFee.LTLMarkup);
+            dataRate.ItemsSource = dt.DefaultView;
+        }
+
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {

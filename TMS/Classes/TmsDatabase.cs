@@ -150,9 +150,9 @@ namespace TMS.Classes
          * Parameters  : string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips
          * Returns     : None
         */
-        public void InsertProcessOrder(string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips)
+        public void InsertProcessOrder(int orderid, string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips)
         {
-            string sql = "INSERT INTO process_orders (clientName, jobType, quantity, origin, destination, vanType,  carrierTotal, numOfTrips) VALUES (@client, @jobType, @quantity, @origin, @destination, @vanType, @carrierTotal, @numOfTrips);"; //string containing the update query related to the process_orders Table
+            string sql = "INSERT INTO process_orders (orderID, clientName, jobType, quantity, origin, destination, vanType,  carrierTotal, numOfTrips) VALUES (@orderID, @client, @jobType, @quantity, @origin, @destination, @vanType, @carrierTotal, @numOfTrips);"; //string containing the update query related to the process_orders Table
             //try catch block for error validation and error checking
             try
             {
@@ -161,6 +161,7 @@ namespace TMS.Classes
                 {
                     //to utilize variables within MySQL queries, the following code converts the "@string" to the associated variable stemming from the parameters
                     //this ensures that the parameter values related to the columns will be written to the table
+                    command.Parameters.Add("@orderID", MySqlDbType.VarChar).Value = orderid;
                     command.Parameters.Add("@client", MySqlDbType.VarChar).Value = client;
                     command.Parameters.Add("@jobtype", MySqlDbType.VarChar).Value = jobType;
                     command.Parameters.Add("@quantity", MySqlDbType.VarChar).Value = quantity;
@@ -180,7 +181,44 @@ namespace TMS.Classes
             }
         }
 
+        public void InsertCompletedOrder(int orderid, string client, int jobType, int quantity, string origin, string destination, int vanType, decimal carrierTotal, int numOfTrips)
+        {
 
+            //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
+            string sql = "INSERT INTO completed_orders (orderID, clientName, jobType, quantity, origin, destination, vanType,  carrierTotal, numOfTrips) VALUES (@orderID, @client, @jobType, @quantity, @origin, @destination, @vanType, @carrierTotal, @numOfTrips);";
+            conn.Open();
+            using (var command = new MySqlCommand(sql, conn))
+            {
+                command.Parameters.Add("@orderID", MySqlDbType.VarChar).Value = orderid;
+                command.Parameters.Add("@client", MySqlDbType.VarChar).Value = client;
+                command.Parameters.Add("@jobtype", MySqlDbType.VarChar).Value = jobType;
+                command.Parameters.Add("@quantity", MySqlDbType.VarChar).Value = quantity;
+                command.Parameters.Add("@origin", MySqlDbType.VarChar).Value = origin;
+                command.Parameters.Add("@destination", MySqlDbType.VarChar).Value = destination;
+                command.Parameters.Add("@vanType", MySqlDbType.VarChar).Value = vanType;
+                command.Parameters.Add("@carrierTotal", MySqlDbType.VarChar).Value = carrierTotal;
+                command.Parameters.Add("@numOfTrips", MySqlDbType.VarChar).Value = numOfTrips;
+                command.ExecuteNonQuery();
+            }
+            conn.Close();
+        }
+
+
+        public void DeleteProcessOrder(string orderID)
+        {
+
+            String sqlStatem = "DELETE FROM process_orders WHERE OrderID=" + orderID;
+            adpt = new MySqlDataAdapter();
+
+            cmd = new MySqlCommand(sqlStatem, conn);
+
+            conn.Open();
+            adpt.DeleteCommand = cmd;
+            adpt.DeleteCommand.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
 
         /*
          * Method      : DeleteNewOrder
@@ -222,7 +260,7 @@ namespace TMS.Classes
          * Parameters  : DataTable dt
          * Returns     : DataTable dt
         */
-        public DataTable getProcessOrders(DataTable dt)
+        public DataTable GetProcessOrders(DataTable dt)
         {
             string sqlStatem = "SELECT OrderID, clientName, jobType, quantity, origin, destination, vanType, carrierTotal, numOfTrips FROM Process_Orders"; //query containing SELECT string extracting colums/values within the table of Process_Orders 
 
@@ -242,6 +280,14 @@ namespace TMS.Classes
             return dt;
         }
 
+        public void updateProcessTrips(int orderID, int numOfTrips)
+        {
+            string sqlStatem = "UPDATE process_orders SET numOfTrips=" + numOfTrips + " WHERE orderID=" + orderID + ";";
+            conn.Open();
+            MySqlCommand comm = new MySqlCommand(sqlStatem, conn);
+            comm.ExecuteNonQuery();
+            conn.Close();
+        }
 
         /*
          * Method      : AdminSelectCarrier
