@@ -48,8 +48,9 @@ namespace TMS
             table = 1;
             // connect method 
             dt.Clear();
-            tmsDB.getNewOrders(dt);
+            tmsDB.GetNewOrders(dt);
             initOrders.ItemsSource = dt.DefaultView;
+
             btnCheckCarriers.IsEnabled = true;
             btnRecOrder.IsEnabled = false;
             btnInvoice.IsEnabled = false;
@@ -59,7 +60,7 @@ namespace TMS
         {
             table = 2;
             processTable.Clear();
-            tmsDB.getProcessOrders(processTable);
+            tmsDB.GetProcessOrders(processTable);
             initOrders.ItemsSource = processTable.DefaultView;
             btnRecOrder.IsEnabled = false;
             btnOneDay.IsEnabled = true;
@@ -68,7 +69,7 @@ namespace TMS
         private void btnOneDay_Click(object sender, RoutedEventArgs e)
         {
             processTable.Clear();
-            tmsDB.getProcessOrders(processTable);
+            tmsDB.GetProcessOrders(processTable);
 
             foreach (DataRow row in processTable.Rows)
             {
@@ -98,7 +99,7 @@ namespace TMS
             }
             //once done get new table and load
             processTable.Rows.Clear();
-            tmsDB.getProcessOrders(processTable);
+            tmsDB.GetProcessOrders(processTable);
             initOrders.ItemsSource = processTable.DefaultView;
             btnRecOrder.IsEnabled = true;
         }
@@ -129,7 +130,7 @@ namespace TMS
                                  row.Row.ItemArray[5].ToString(),
                                  int.Parse(row.Row.ItemArray[6].ToString()));
             //find carriers with matching origin city
-            carrierTable = tmsDB.getCarriers(selectedOrder.Origin);
+            carrierTable = tmsDB.GetCarriers(selectedOrder.Origin);
             initOrders.ItemsSource = carrierTable.DefaultView;
 
             //store temporarily

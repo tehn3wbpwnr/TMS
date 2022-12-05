@@ -1,4 +1,4 @@
-﻿using System;
+﻿  using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -50,7 +50,9 @@ namespace TMS
 
             dataShow.ItemsSource = loadedContracts.DefaultView;
             dataCompletedOrders.Visibility = Visibility.Hidden;
-            btnCreateOrder.IsEnabled = true;
+
+            btnCreateOrder.IsEnabled = false; 
+
         }
 
         private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
@@ -64,6 +66,7 @@ namespace TMS
                                        int.Parse(row.Row.ItemArray[5].ToString()));
             tmsDB.Connection();
             tmsDB.InsertNewOrder(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
+            btnCreateOrder.IsEnabled = false;
         }
 
         private void btnCompletedOrders_Click(object sender, RoutedEventArgs e)
@@ -73,8 +76,15 @@ namespace TMS
             completedContracts = tmsDB.BuyerSelectCompletedOrders(completedContracts);
             dataCompletedOrders.ItemsSource = completedContracts.DefaultView;
             dataShow.Visibility = Visibility.Hidden;
-            btnCreateInvoice.IsEnabled = true;
 
+            btnCreateInvoice.IsEnabled = true;
+            btnCreateOrder.IsEnabled = false; 
+        }
+
+
+        private void dataShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btnCreateOrder.IsEnabled = true;
         }
 
         private void btnCreateInvoice_Click(object sender, RoutedEventArgs e)
