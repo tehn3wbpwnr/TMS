@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMS"
         mc:Ignorable="d"
+
         Title="TMS Data" Height="500" Width="800" ResizeMode="NoResize">
     <Canvas>
         <Label Content="TMS: Data" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
@@ -18,10 +19,12 @@
         <Button Name="btnRouteTable" Content="Routes" HorizontalAlignment="Left" Margin="230,90,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnRouteTable_Click"/>
 
         <Grid x:Name="gridButtons" Visibility="Hidden" Canvas.Left="723" Canvas.Top="15" HorizontalAlignment="Left" VerticalAlignment="Center">
+
             <Button Name="btnAdd" Content="Add" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50" Click="btnAdd_Click"/>
             <Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Click="btnDelete_Click" Margin="0,35,0,0"/>
             <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="50" Click="btnUpdate_Click" Margin="0,70,0,0"/>
         </Grid>
+
 
         <Grid x:Name="gridRateFee" Visibility="Hidden" Canvas.Left="30" Canvas.Top="325" HorizontalAlignment="Center" VerticalAlignment="Top" Width="531" Height="99">
             <Button Name="btnChange" Content="Change" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Click="btnChange_Click" Height="22"/>
@@ -34,6 +37,5 @@
             <TextBox Name="txtFTLMarkup" HorizontalAlignment="Left" Margin="372,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="19"/>
             <TextBox Name="txtLTLMarkup" HorizontalAlignment="Left" Margin="372,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
         </Grid>
-
     </Canvas>
 </Window>
