@@ -65,6 +65,24 @@ namespace TMS.Classes
             return dt;
         }
 
+        public void InsertNewInvoice(int orderID, decimal carrierTotal, decimal markUpTotal, decimal salesTaxTotal, decimal finalTotal, string date)
+        {
+            //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
+            string sql = "INSERT INTO New_Orders (orderID, carrierTotal, markUpTotal, salesTaxTotal, finalTotal, date) VALUES (@orderID, @carrierTotal, @markUpTotal, @salesTaxTotal, @finalTotal, @date);";
+            conn.Open();
+            using (var command = new MySqlCommand(sql, conn))
+            {
+                command.Parameters.Add("@client", MySqlDbType.VarChar).Value = orderID;
+                command.Parameters.Add("@jobtype", MySqlDbType.VarChar).Value = carrierTotal;
+                command.Parameters.Add("@quantity", MySqlDbType.VarChar).Value = markUpTotal;
+                command.Parameters.Add("@origin", MySqlDbType.VarChar).Value = salesTaxTotal;
+                command.Parameters.Add("@destination", MySqlDbType.VarChar).Value = finalTotal;
+                command.Parameters.Add("@vanType", MySqlDbType.VarChar).Value = date;
+                command.ExecuteNonQuery();
+            }
+            conn.Close();
+        }
+
         public void InsertNewOrder(string client, int jobType, int quantity, string origin, string destination, int vanType)
         {
             //String sqlStatem = "INSERT INTO New_Orders (clientName, jobType, quantity, origin, destination, vanType) VALUES (" + client + "," + jobType + "," + quantity + "," + origin + "," + destination + "," + vanType + ");";
@@ -127,7 +145,21 @@ namespace TMS.Classes
             conn.Close();
         }
 
+        public void DeleteCompletedOrder(string orderID)
+        {
 
+            String sqlStatem = "DELETE FROM completed_orders WHERE OrderID=" + orderID;
+            adpt = new MySqlDataAdapter();
+
+            cmd = new MySqlCommand(sqlStatem, conn);
+
+            conn.Open();
+            adpt.DeleteCommand = cmd;
+            adpt.DeleteCommand.ExecuteNonQuery();
+
+            cmd.Dispose();
+            conn.Close();
+        }
         public void DeleteProcessOrder(string orderID)
         {
 

@@ -12,6 +12,7 @@
         <Button x:Name="btnConnect" Content="Connect to Contract Marketplace" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Height="30" Width="192" Click="btnConnect_Click"/>
         <Label Content="TMS: Buyer" HorizontalAlignment="Left" Margin="44,30,0,0" VerticalAlignment="Top" Height="35" Width="126" FontSize="20"/>
         <Button Name="btnCreateOrder" Content="Create Order" HorizontalAlignment="Left" Margin="680,286,0,0" VerticalAlignment="Top" Click="btnCreateOrder_Click"/>
+        <Button Name="btnCreateInvoice" Content="Create Invoice" HorizontalAlignment="Left" Margin="580,286,0,0" VerticalAlignment="Top" Click="btnCreateInvoice_Click" />
         <Button Name="btnCompletedOrders" Content="Completed Orders" HorizontalAlignment="Left" Margin="222,90,0,0" VerticalAlignment="Top" Width="112" Height="30" Click="btnCompletedOrders_Click"/>
     </Grid>
 </Window>

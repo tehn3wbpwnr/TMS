@@ -9,7 +9,10 @@ namespace TMS.Classes
 {
     static internal class RateFee
     {
-        public static List<string> rates = new List<string>();    
+        public static List<string> rates = new List<string>();
+        public static decimal FTLMarkUp = 0.08M;
+        public static decimal LTLMarkUp = 0.05M;
+        public static decimal salesTax = 0.13M;
 
         static RateFee()
         {

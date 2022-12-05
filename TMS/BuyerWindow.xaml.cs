@@ -24,9 +24,13 @@ namespace TMS
     /// </summary>
     public partial class BuyerWindow : Window
     {
+        DataTable completedContracts = new DataTable();
+        TmsDatabase tmsDB =  new TmsDatabase();
         public BuyerWindow()
         {
             InitializeComponent();
+            btnCreateOrder.IsEnabled = false;
+            btnCreateInvoice.IsEnabled = false;
         }
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -46,11 +50,11 @@ namespace TMS
 
             dataShow.ItemsSource = loadedContracts.DefaultView;
             dataCompletedOrders.Visibility = Visibility.Hidden;
+            btnCreateOrder.IsEnabled = true;
         }
 
         private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
         {
-            TmsDatabase tmsDB = new TmsDatabase();
             DataRowView row = dataShow.SelectedItems[0] as DataRowView;
             Order newOrder = new Order(row.Row.ItemArray[0].ToString(),
                                        int.Parse(row.Row.ItemArray[1].ToString()),
@@ -64,14 +68,55 @@ namespace TMS
 
         private void btnCompletedOrders_Click(object sender, RoutedEventArgs e)
         {
-            DataTable completedContracts = new DataTable();
             dataCompletedOrders.Visibility = Visibility.Visible;
-            TmsDatabase tmsDB = new TmsDatabase();
             tmsDB.Connection();
             completedContracts = tmsDB.BuyerSelectCompletedOrders(completedContracts);
             dataCompletedOrders.ItemsSource = completedContracts.DefaultView;
             dataShow.Visibility = Visibility.Hidden;
+            btnCreateInvoice.IsEnabled = true;
 
+        }
+
+        private void btnCreateInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            //load row
+            DataRow row = dataCompletedOrders.SelectedItems[0] as DataRow;
+            //create temp order based off of that row
+            Order tempOrder = new Order(int.Parse(row.ItemArray[0].ToString()),
+                                 row.ItemArray[1].ToString(),
+                                 int.Parse(row.ItemArray[2].ToString()),
+                                 int.Parse(row.ItemArray[3].ToString()),
+                                 row.ItemArray[4].ToString(),
+                                 row.ItemArray[5].ToString(),
+                                 int.Parse(row.ItemArray[6].ToString()),
+                                 decimal.Parse(row.ItemArray[7].ToString()),
+                                 int.Parse(row.ItemArray[8].ToString()));
+            //get markup
+            decimal markUp;
+            if(tempOrder.JobType == 0)
+            {
+                markUp = RateFee.FTLMarkUp;
+            }
+            else
+            {
+                markUp = RateFee.LTLMarkUp;
+            }
+
+            //variables for invoice
+            decimal salesTax = RateFee.salesTax * (tempOrder.CarrierTotal * markUp);
+            markUp = tempOrder.CarrierTotal * markUp;
+            decimal finalTotal = tempOrder.CarrierTotal + markUp + salesTax;
+            string date = DateTime.Now.ToString("yyyy/MM/dd");
+
+            //create invoice
+            Invoice newInvoice = new Invoice(tempOrder.OrderId, tempOrder.CarrierTotal, markUp, salesTax, finalTotal, date);
+
+            //push invoice to db
+
+            tmsDB.InsertNewInvoice(newInvoice.OrderID, newInvoice.CarrierTotal, newInvoice.MarkUpTotal, newInvoice.SalesTaxTotal, newInvoice.FinalTotal, newInvoice.Date);
+
+            //delete order from completed order table
+            tmsDB.DeleteCompletedOrder(newInvoice.OrderID.ToString());
         }
     }
 }

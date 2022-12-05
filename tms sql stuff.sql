@@ -51,6 +51,16 @@ CREATE TABLE Carriers
     reefCharge DECIMAL (10, 3),
     PRIMARY KEY (carrierID)
 );
+CREATE TABLE Invoice
+(
+	orderID INT,
+    carrierTotal DECIMAL(10,2),
+    markUpTotal DECIMAL(10,2),
+    salesTaxTotal DECIMAL(10,2),
+    finalTotal DECIMAL(10,2),
+    date DATE,
+    PRIMARY KEY(carrierID)
+);
 INSERT INTO Carriers (cName, dCity, FTLA, LTLA, FTLRate, LTLRate, reefCharge)
 VALUES ('Planet Express', 'Windsor', 50, 640, '5.21', '0.3621', '0.08');
 
@@ -89,5 +99,3 @@ VALUES ('We Haul', 'Ottawa', 11, 0, '5.2', 0, '0.065');
 
 INSERT INTO Carriers (cName, dCity, FTLA, LTLA, FTLRate, LTLRate, reefCharge)
 VALUES    ('We Haul', 'Toronto', 11, 0, '5.2', 0, '0.065');*/
-
-delete from process_orders where OrderID="*";
