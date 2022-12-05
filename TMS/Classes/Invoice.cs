@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * File         : Invoice.cs
+ * Project      : Milestone 4
+ * Programmer   : Alex Silveira, Emanuel Juracic, Josh Moore
+ * First Version:
+ * Description  : This file contains class related information for the invoice class
+ */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +15,8 @@ using TMS.Classes;
 
 namespace TMS
 {
+    // Name     : Invoice
+    // Purpose  : The purpose of this class to hold invoice related data members and methods, such as text file generation of invoices
     internal class Invoice
     {
         public int OrderID { get; set; }
@@ -17,6 +26,13 @@ namespace TMS
         public decimal FinalTotal { get; set; }
         public string Date { get; set; }
 
+
+        /*
+         * Method      :  Invoice(int orderID, decimal carrierTotal, decimal markUpTotal, decimal salesTaxTotal, decimal finalTotal, string date)
+         * Description : This is a constructor for the invoice class it is used in the creation of an invoice in memory to set all data members related to the invoice upon creation
+         * Parameters  : int orderID, decimal carrierTotal, decimal markUpTotal, decimal salesTaxTotal, decimal finalTotal, string date 
+         * Returns     : N/A
+        */
         public Invoice(int orderID, decimal carrierTotal, decimal markUpTotal, decimal salesTaxTotal, decimal finalTotal, string date)
         {
             OrderID = orderID;
@@ -25,8 +41,15 @@ namespace TMS
             SalesTaxTotal = salesTaxTotal;
             FinalTotal = finalTotal;
             Date = date;
-        }  
-        
+        }
+
+
+        /*
+         * Method      : void GenerateInvoiceText()
+         * Description : This is a method that is called to generate the invoice in a text file as stated in the requirements.
+         * Parameters  : N/A
+         * Returns     : N/A
+        */
         public void GenerateInvoiceText()
         {
             string fileName = "Order-" + OrderID + " Invoice.txt";

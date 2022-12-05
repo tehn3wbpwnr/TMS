@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * File         : Logger.cs
+ * Project      : Milestone 4
+ * Programmer   : Alex Silveira, Emanuel Juracic, Josh Moore
+ * First Version:
+ * Description  : This file contains class related information for the Logger class
+ */
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -8,12 +15,20 @@ using System.Threading.Tasks;
 
 namespace TMS.Classes
 {
+    // Name     : Logger
+    // Purpose  : The purpose of this class is to easily enable a logging functionality, it writes to a specified log file from the config file.
     internal class Logger
     {
         string fileName;
 
         string FileName { get; set; }
 
+        /*
+         * Method      :  Logger()
+         * Description : This is a constructor for the Logger class, it gets the specified log file path from the config.
+         * Parameters  : N/A 
+         * Returns     : N/A
+        */
         public Logger()
         {
             FileName = ConfigurationManager.AppSettings["LogFilePath"];          
@@ -43,6 +58,13 @@ namespace TMS.Classes
                 }
             }
         }
+
+        /*
+         * Method      : List<string> LoadLogs()
+         * Description : This is a method that is used for the admin window to load a list of our current logs in our log fiels for the logs to be accesible in the window.
+         * Parameters  : N/A 
+         * Returns     : List<string>: a List of strings that are the lines of the log file.
+        */
 
         public List<string> LoadLogs()
         {
