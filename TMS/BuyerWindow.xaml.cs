@@ -25,11 +25,17 @@ namespace TMS
     public partial class BuyerWindow : Window
     {
         TmsDatabase tmsDB =  new TmsDatabase();
+
+        DataTable loadedContracts = new DataTable();
+        Logger log = new Logger();
+
+        DataTable completedContracts = new DataTable();
         public BuyerWindow()
         {
             InitializeComponent();
             btnCreateOrder.IsEnabled = false;
             btnCreateInvoice.IsEnabled = false;
+            tmsDB.Connection();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -42,13 +48,14 @@ namespace TMS
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
-            DataTable loadedContracts = new DataTable();
+            loadedContracts.Rows.Clear();
             dataContractMarket.Visibility = Visibility.Visible;
             ContractMarketplace contractMarketplace = new ContractMarketplace();
             string connect = "Server=159.89.117.198;Database=cmp;Uid=DevOSHT;Pwd= Snodgr4ss!;";
             string statement = "SELECT * FROM Contract;";
 
             loadedContracts = contractMarketplace.SetUpConnection(loadedContracts, connect, statement);
+            log.WriteLog("Contracts successfully pulled from Contract MarketPlace");
 
             dataContractMarket.ItemsSource = loadedContracts.DefaultView;
             dataCompletedOrders.Visibility = Visibility.Hidden;
@@ -70,9 +77,20 @@ namespace TMS
                                        row.Row.ItemArray[3].ToString(),
                                        row.Row.ItemArray[4].ToString(),
                                        int.Parse(row.Row.ItemArray[5].ToString()));
-            tmsDB.Connection();
-            tmsDB.InsertNewOrder(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
 
+            tmsDB.InsertNewOrder(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
+            log.WriteLog("Order was created for " + newOrder.ClientName);
+
+
+            foreach (DataRow rows in loadedContracts.Rows)
+            {
+                if (rows["Client_Name"].ToString() == row.Row.ItemArray[0].ToString() && rows["Origin"].ToString() == row.Row.ItemArray[3].ToString() && rows["Destination"].ToString() == row.Row.ItemArray[4].ToString())
+                {
+                    rows.Delete();
+                    break;
+                }
+            }
+            loadedContracts.AcceptChanges();
             btnCreateOrder.IsEnabled = false;
         }
 
@@ -80,10 +98,11 @@ namespace TMS
 
         private void btnCompletedOrders_Click(object sender, RoutedEventArgs e)
         {
-            DataTable completedContracts = new DataTable();
+
+            completedContracts.Rows.Clear();
             dataCompletedOrders.Visibility = Visibility.Visible;
-            tmsDB.Connection();
-            completedContracts = tmsDB.BuyerSelectCompletedOrders(completedContracts);
+            tmsDB.BuyerSelectCompletedOrders(completedContracts);
+
             dataCompletedOrders.ItemsSource = completedContracts.DefaultView;
             dataContractMarket.Visibility = Visibility.Hidden;
 
@@ -126,14 +145,14 @@ namespace TMS
             }
 
             //variables for invoice
-            decimal salesTax = RateFee.salesTax * ((tempOrder.CarrierTotal * markUp) + tempOrder.CarrierTotal);
-            markUp = tempOrder.CarrierTotal * markUp;
-            decimal finalTotal = tempOrder.CarrierTotal + markUp + salesTax;
+            decimal salesTax = Math.Round(RateFee.salesTax * ((tempOrder.CarrierTotal * markUp) + tempOrder.CarrierTotal),2);
+            markUp = Math.Round(tempOrder.CarrierTotal * markUp,2);
+            decimal finalTotal = Math.Round(tempOrder.CarrierTotal + markUp + salesTax,2);
             string date = DateTime.Now.ToString("yyyy/MM/dd");
 
             //create invoice
             Invoice newInvoice = new Invoice(tempOrder.OrderId, tempOrder.CarrierTotal, markUp, salesTax, finalTotal, date);
-
+            log.WriteLog("Invoice was created with orderID: " + tempOrder.OrderId);
             //push invoice to db
 
             tmsDB.InsertNewInvoice(newInvoice.OrderID, newInvoice.CarrierTotal, newInvoice.MarkUpTotal, newInvoice.SalesTaxTotal, newInvoice.FinalTotal, newInvoice.Date);
@@ -143,6 +162,9 @@ namespace TMS
 
             //delete order from completed order table
             tmsDB.DeleteCompletedOrder(newInvoice.OrderID.ToString());
+
+            completedContracts.Rows.Clear();
+            tmsDB.BuyerSelectCompletedOrders(completedContracts);
 
             btnCreateInvoice.IsEnabled = false;
             btnCreateOrder.IsEnabled = false;

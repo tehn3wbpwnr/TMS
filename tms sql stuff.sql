@@ -59,7 +59,7 @@ CREATE TABLE Invoice
     salesTaxTotal DECIMAL(10,2),
     finalTotal DECIMAL(10,2),
     date DATE,
-    PRIMARY KEY(carrierID)
+    PRIMARY KEY(orderID)
 );
 INSERT INTO Carriers (cName, dCity, FTLA, LTLA, FTLRate, LTLRate, reefCharge)
 VALUES ('Planet Express', 'Windsor', 50, 640, '5.21', '0.3621', '0.08');
