@@ -24,7 +24,6 @@ namespace TMS
     /// </summary>
     public partial class BuyerWindow : Window
     {
-        DataTable loadedContracts = new DataTable(); 
         public BuyerWindow()
         {
             InitializeComponent();
@@ -37,6 +36,8 @@ namespace TMS
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
+            DataTable loadedContracts = new DataTable();
+            dataShow.Visibility = Visibility.Visible;
             ContractMarketplace contractMarketplace = new ContractMarketplace();
             string connect = "Server=159.89.117.198;Database=cmp;Uid=DevOSHT;Pwd= Snodgr4ss!;";
             string statement = "SELECT * FROM Contract;";
@@ -44,6 +45,7 @@ namespace TMS
             loadedContracts = contractMarketplace.SetUpConnection(loadedContracts, connect, statement);
 
             dataShow.ItemsSource = loadedContracts.DefaultView;
+            dataCompletedOrders.Visibility = Visibility.Hidden;
         }
 
         private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
@@ -58,6 +60,18 @@ namespace TMS
                                        int.Parse(row.Row.ItemArray[5].ToString()));
             tmsDB.Connection();
             tmsDB.InsertNewOrder(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
+        }
+
+        private void btnCompletedOrders_Click(object sender, RoutedEventArgs e)
+        {
+            DataTable completedContracts = new DataTable();
+            dataCompletedOrders.Visibility = Visibility.Visible;
+            TmsDatabase tmsDB = new TmsDatabase();
+            tmsDB.Connection();
+            completedContracts = tmsDB.BuyerSelectCompletedOrders(completedContracts);
+            dataCompletedOrders.ItemsSource = completedContracts.DefaultView;
+            dataShow.Visibility = Visibility.Hidden;
+
         }
     }
 }

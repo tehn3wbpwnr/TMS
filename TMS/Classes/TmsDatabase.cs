@@ -242,5 +242,23 @@ namespace TMS.Classes
             }
             conn.Close();
         }
+
+        public DataTable BuyerSelectCompletedOrders(DataTable dt)
+        {
+            string sqlStatem = "SELECT orderID, clientName, jobType, quantity, origin, destination, vanType, carrierTotal, numOfTrips FROM Completed_Orders";
+
+            try
+            {
+                conn.Open();
+                using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatem, conn))
+                    da.Fill(dt);
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
+        }
     }
 }
