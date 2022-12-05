@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TMS"
         mc:Ignorable="d"
         Title="UpdateWindow" Height="450" Width="400">
-    <Grid>
+    <Canvas>
         <Label Content="Carrier ID" HorizontalAlignment="Left" Margin="31,19,0,0" VerticalAlignment="Top" Width="200" Height="30"/>
         <Label Content="Carrier Name" HorizontalAlignment="Left" Margin="31,59,0,0" VerticalAlignment="Top" Width="200" Height="30"/>
         <Label Content="City" HorizontalAlignment="Left" Margin="31,99,0,0" VerticalAlignment="Top" Width="200" Height="30"/>
@@ -26,5 +26,5 @@
         <TextBox Name="txtReefer" HorizontalAlignment="Left" Margin="249,299,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30"/>
 
         <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="167,366,0,0" VerticalAlignment="Top" Click="BtnUpdate_Click"/>
-    </Grid>
+    </Canvas>
 </Window>
