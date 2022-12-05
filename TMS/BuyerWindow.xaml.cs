@@ -24,7 +24,6 @@ namespace TMS
     /// </summary>
     public partial class BuyerWindow : Window
     {
-        DataTable completedContracts = new DataTable();
         TmsDatabase tmsDB =  new TmsDatabase();
         public BuyerWindow()
         {
@@ -32,11 +31,17 @@ namespace TMS
             btnCreateOrder.IsEnabled = false;
             btnCreateInvoice.IsEnabled = false;
         }
+
+
+
+
         protected override void OnClosing(CancelEventArgs e)
         {
             LoginWindow lw = new LoginWindow();
             lw.Show();
         }
+
+
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
@@ -51,9 +56,13 @@ namespace TMS
             dataContractMarket.ItemsSource = loadedContracts.DefaultView;
             dataCompletedOrders.Visibility = Visibility.Hidden;
 
-            btnCreateOrder.IsEnabled = false; 
-
+            btnCreateOrder.IsEnabled = false;
+            btnCreateInvoice.IsEnabled = false;
+            //btnCompletedOrders.IsEnabled = false;   
         }
+
+
+
 
         private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
         {
@@ -66,26 +75,33 @@ namespace TMS
                                        int.Parse(row.Row.ItemArray[5].ToString()));
             tmsDB.Connection();
             tmsDB.InsertNewOrder(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
+
             btnCreateOrder.IsEnabled = false;
         }
 
+
+
         private void btnCompletedOrders_Click(object sender, RoutedEventArgs e)
         {
+            DataTable completedContracts = new DataTable();
             dataCompletedOrders.Visibility = Visibility.Visible;
             tmsDB.Connection();
             completedContracts = tmsDB.BuyerSelectCompletedOrders(completedContracts);
             dataCompletedOrders.ItemsSource = completedContracts.DefaultView;
             dataContractMarket.Visibility = Visibility.Hidden;
 
-            btnCreateInvoice.IsEnabled = true;
-            btnCreateOrder.IsEnabled = false; 
+            btnCreateOrder.IsEnabled = false;
+            btnCreateInvoice.IsEnabled = false;
         }
 
 
-        private void dataShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dataContractMarket_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnCreateOrder.IsEnabled = true;
+            btnCreateInvoice.IsEnabled = false;
         }
+
+
 
         private void btnCreateInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -125,8 +141,19 @@ namespace TMS
 
             tmsDB.InsertNewInvoice(newInvoice.OrderID, newInvoice.CarrierTotal, newInvoice.MarkUpTotal, newInvoice.SalesTaxTotal, newInvoice.FinalTotal, newInvoice.Date);
 
+            //write to file
+            newInvoice.GenerateInvoiceText();
+
             //delete order from completed order table
             tmsDB.DeleteCompletedOrder(newInvoice.OrderID.ToString());
+
+            btnCreateInvoice.IsEnabled = false;
+            btnCreateOrder.IsEnabled = false;
+        }
+
+        private void dataCompletedOrders_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btnCreateInvoice.IsEnabled = true;
         }
     }
 }
