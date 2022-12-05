@@ -129,9 +129,9 @@ namespace TMS
             }
 
             //variables for invoice
-            decimal salesTax = RateFee.salesTax * ((tempOrder.CarrierTotal * markUp) + tempOrder.CarrierTotal);
-            markUp = tempOrder.CarrierTotal * markUp;
-            decimal finalTotal = tempOrder.CarrierTotal + markUp + salesTax;
+            decimal salesTax = Math.Round(RateFee.salesTax * ((tempOrder.CarrierTotal * markUp) + tempOrder.CarrierTotal),2);
+            markUp = Math.Round(tempOrder.CarrierTotal * markUp,2);
+            decimal finalTotal = Math.Round(tempOrder.CarrierTotal + markUp + salesTax,2);
             string date = DateTime.Now.ToString("yyyy/MM/dd");
 
             //create invoice
