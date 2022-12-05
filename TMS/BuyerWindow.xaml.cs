@@ -26,11 +26,13 @@ namespace TMS
     {
         TmsDatabase tmsDB =  new TmsDatabase();
         Logger log = new Logger();
+        DataTable completedContracts = new DataTable();
         public BuyerWindow()
         {
             InitializeComponent();
             btnCreateOrder.IsEnabled = false;
             btnCreateInvoice.IsEnabled = false;
+            tmsDB.Connection();
         }
 
 
@@ -75,7 +77,6 @@ namespace TMS
                                        row.Row.ItemArray[3].ToString(),
                                        row.Row.ItemArray[4].ToString(),
                                        int.Parse(row.Row.ItemArray[5].ToString()));
-            tmsDB.Connection();
 
             tmsDB.InsertNewOrder(newOrder.ClientName, newOrder.JobType, newOrder.Quantity, newOrder.Origin, newOrder.Destination, newOrder.TruckType);
             log.WriteLog("Order was created for " + newOrder.ClientName);
@@ -87,10 +88,9 @@ namespace TMS
 
         private void btnCompletedOrders_Click(object sender, RoutedEventArgs e)
         {
-            DataTable completedContracts = new DataTable();
+            
             dataCompletedOrders.Visibility = Visibility.Visible;
-            tmsDB.Connection();
-            completedContracts = tmsDB.BuyerSelectCompletedOrders(completedContracts);
+            tmsDB.BuyerSelectCompletedOrders(completedContracts);
             dataCompletedOrders.ItemsSource = completedContracts.DefaultView;
             dataContractMarket.Visibility = Visibility.Hidden;
 
@@ -150,6 +150,9 @@ namespace TMS
 
             //delete order from completed order table
             tmsDB.DeleteCompletedOrder(newInvoice.OrderID.ToString());
+
+            completedContracts.Rows.Clear();
+            tmsDB.BuyerSelectCompletedOrders(completedContracts);
 
             btnCreateInvoice.IsEnabled = false;
             btnCreateOrder.IsEnabled = false;
