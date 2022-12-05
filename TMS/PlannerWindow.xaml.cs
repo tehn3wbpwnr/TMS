@@ -35,6 +35,7 @@ namespace TMS
         {
             InitializeComponent();
             tmsDB.Connection();
+            btnOneDay.IsEnabled = false;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -46,9 +47,9 @@ namespace TMS
         {
             table = 1;
             // connect method 
-            processTable.Clear();
-            tmsDB.getNewOrders(processTable);
-            initOrders.ItemsSource = processTable.DefaultView;
+            dt.Clear();
+            tmsDB.getNewOrders(dt);
+            initOrders.ItemsSource = dt.DefaultView;
             btnCheckCarriers.IsEnabled = true;
             btnRecOrder.IsEnabled = false;
             btnInvoice.IsEnabled = false;
@@ -57,14 +58,49 @@ namespace TMS
         private void btnViewInProcess_Click(object sender, RoutedEventArgs e)
         {
             table = 2;
-            dt.Clear();
-            tmsDB.getProcessOrders(dt);
-            initOrders.ItemsSource = dt.DefaultView;
+            processTable.Clear();
+            tmsDB.getProcessOrders(processTable);
+            initOrders.ItemsSource = processTable.DefaultView;
+            btnRecOrder.IsEnabled = false;
+            btnOneDay.IsEnabled = true;
         }
 
         private void btnOneDay_Click(object sender, RoutedEventArgs e)
         {
+            processTable.Clear();
+            tmsDB.getProcessOrders(processTable);
 
+            foreach (DataRow row in processTable.Rows)
+            {
+                Order tempOrder = new Order(int.Parse(row.ItemArray[0].ToString()),
+                                 row.ItemArray[1].ToString(),
+                                 int.Parse(row.ItemArray[2].ToString()),
+                                 int.Parse(row.ItemArray[3].ToString()),
+                                 row.ItemArray[4].ToString(),
+                                 row.ItemArray[5].ToString(),
+                                 int.Parse(row.ItemArray[6].ToString()),
+                                 decimal.Parse(row.ItemArray[7].ToString()),
+                                 int.Parse(row.ItemArray[8].ToString()));
+
+                if (tempOrder.NumOfTrips != 0)
+                {
+                    tempOrder.NumOfTrips = tempOrder.NumOfTrips - 1;
+                    if (tempOrder.NumOfTrips == 0)
+                    {
+                        tmsDB.DeleteProcessOrder(tempOrder.OrderId.ToString());
+                        tmsDB.InsertCompletedOrder(tempOrder.OrderId,tempOrder.ClientName, tempOrder.JobType, tempOrder.Quantity, tempOrder.Origin, tempOrder.Destination, tempOrder.TruckType, tempOrder.CarrierTotal, tempOrder.NumOfTrips);
+                    }
+                    else
+                    {
+                        tmsDB.updateProcessTrips(tempOrder.OrderId, tempOrder.NumOfTrips);
+                    }
+                }
+            }
+            //once done get new table and load
+            processTable.Rows.Clear();
+            tmsDB.getProcessOrders(processTable);
+            initOrders.ItemsSource = processTable.DefaultView;
+            btnRecOrder.IsEnabled = true;
         }
 
         private void btnMarkComplete_Click(object sender, RoutedEventArgs e)
@@ -171,7 +207,7 @@ namespace TMS
             carrierTable.Clear();
             
             //put this order into the new inprogress order table with the added total and numoftrips as new columns
-            tmsDB.InsertProcessOrder(inprogressOrder.ClientName, inprogressOrder.JobType, inprogressOrder.Quantity, inprogressOrder.Origin, inprogressOrder.Destination, inprogressOrder.TruckType, Total, numOfTrips);
+            tmsDB.InsertProcessOrder(inprogressOrder.OrderId, inprogressOrder.ClientName, inprogressOrder.JobType, inprogressOrder.Quantity, inprogressOrder.Origin, inprogressOrder.Destination, inprogressOrder.TruckType, Total, numOfTrips);
 
             btnAddTrip.IsEnabled = false;
             btnRecOrder.IsEnabled = true;
