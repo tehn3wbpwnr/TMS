@@ -2,7 +2,7 @@
  * File         : TmsDatabase.cs
  * Project      : Milestone 4
  * Programmer   : Alex Silveira, Emanuel Juracic, Josh Moore
- * First Version:
+ * First Version: November 10th 2022
  * Description  : This class involves establishing a connection and utilizing various queries related the local TMS Database
  */
 
