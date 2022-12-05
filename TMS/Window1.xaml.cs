@@ -20,7 +20,6 @@ namespace TMS
 {
     public partial class TmsDataWindow : Window
     {
-        DataTable dt = new DataTable();
         public TmsDataWindow()
         {
             InitializeComponent();
@@ -28,16 +27,29 @@ namespace TMS
 
         private void btnCarrierData_Click(object sender, RoutedEventArgs e)
         {
+            DataTable dt = new DataTable();
             loadCarrierData();
+            dataCarrier.Visibility = Visibility.Visible;
+            dataRoutes.Visibility = Visibility.Hidden;
+            dataRate.Visibility = Visibility.Hidden;
         }
 
         private void btnRateFee_Click(object sender, RoutedEventArgs e)
         {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("FTL Avg Rate");
+            dt.Columns.Add("LTL Avg Rate");
+            dt.Rows.Add(RateFee.rates[0], RateFee.rates[1]);
+            dataRate.ItemsSource = dt.DefaultView;
 
+            dataCarrier.Visibility = Visibility.Hidden;
+            dataRoutes.Visibility = Visibility.Hidden;
+            dataRate.Visibility = Visibility.Visible;
         }
 
         private void btnRouteTable_Click(object sender, RoutedEventArgs e)
         {
+            DataTable dt = new DataTable();
             dt.Columns.Add("City");
             dt.Columns.Add("Distance");
             dt.Columns.Add("Time");
@@ -48,7 +60,21 @@ namespace TMS
             {
                 dt.Rows.Add(city.city, city.distance.ToString(), city.time.ToString(), city.westCity, city.eastCity);          
             }
-            dataShow.ItemsSource = dt.DefaultView;
+            dataRoutes.ItemsSource = dt.DefaultView;
+
+            dataCarrier.Visibility = Visibility.Hidden;
+            dataRoutes.Visibility = Visibility.Visible;
+            dataRate.Visibility = Visibility.Hidden;
+        }
+
+
+        private void loadCarrierData()
+        {
+            DataTable dt = new DataTable();    
+            TmsDatabase tms = new TmsDatabase();
+            tms.Connection();
+            dt = tms.AdminSelectCarrier(dt);
+            dataCarrier.ItemsSource = dt.DefaultView;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -60,7 +86,7 @@ namespace TMS
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             TmsDatabase td = new TmsDatabase();
-            DataRowView row = dataShow.SelectedItems[0] as DataRowView;
+            DataRowView row = dataCarrier.SelectedItems[0] as DataRowView;
             if (row != null)
             {
                 td.Connection();
@@ -71,18 +97,9 @@ namespace TMS
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView row = dataShow.SelectedItems[0] as DataRowView;
+            DataRowView row = dataCarrier.SelectedItems[0] as DataRowView;
             UpdateWindow uw = new UpdateWindow(row);
             uw.Show();
-        }
-
-        private void loadCarrierData()
-        {
-            DataTable dt = new DataTable();
-            TmsDatabase tms = new TmsDatabase();
-            tms.Connection();
-            dt = tms.AdminSelectCarrier(dt);
-            dataShow.ItemsSource = dt.DefaultView;
         }
     }
 }
