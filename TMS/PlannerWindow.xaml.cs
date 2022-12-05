@@ -58,6 +58,7 @@ namespace TMS
             btnRecOrder.IsEnabled = false;
             btnInvoiceAll.IsEnabled = false;
             btnViewProcess.IsEnabled = false;
+            btnTwoWeeksInvoice.IsEnabled = false;
         }
         private void btnViewInProcess_Click(object sender, RoutedEventArgs e)
         {
@@ -223,6 +224,7 @@ namespace TMS
             btnAddTrip.IsEnabled = false;
             btnRecOrder.IsEnabled = true;
             btnInvoiceAll.IsEnabled = true;
+            btnTwoWeeksInvoice.IsEnabled = true;
             btnViewProcess.IsEnabled = true;
             //remove from new orders
 
