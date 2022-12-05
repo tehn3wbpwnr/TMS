@@ -1,4 +1,11 @@
-﻿  using System;
+﻿/*
+ * File         : BuyerWindow.xaml.cs
+ * Project      : Milestone 4
+ * Programmer   : Alex Silveira, Emanuel Juracic, Josh Moore
+ * First Version: nov 10 2022
+ * Description  : This file contains window related information for the "add" window
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -20,11 +27,11 @@ using TMS.Classes;
 
 namespace TMS
 {
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
+    // Name     : buyerwindow
+    // Purpose  : The purpose of this class is to hold window related information for the buyer window
     public partial class BuyerWindow : Window
     {
+        //properties
         TmsDatabase tmsDB =  new TmsDatabase();
 
         DataTable loadedContracts = new DataTable();
@@ -34,6 +41,14 @@ namespace TMS
 
         private const string MARKET_IP = "MP_IPAddress";
         private string ip = ConfigurationManager.AppSettings[MARKET_IP];
+        //methods
+
+        /*
+         * Method      : BuyerWindow()
+         * Description : default window constructor, sets some properties aswell
+         * Parameters  : N/A
+         * Returns     : N/A
+        */
 
         public BuyerWindow()
         {
@@ -43,6 +58,12 @@ namespace TMS
             tmsDB.Connection();
         }
 
+        /*
+         * Method      : OnClosing
+         * Description : event method related to closing the window to reopen the login window
+         * Parameters  : N/A
+         * Returns     : N/A
+        */
         protected override void OnClosing(CancelEventArgs e)
         {
             LoginWindow lw = new LoginWindow();
@@ -50,7 +71,12 @@ namespace TMS
         }
 
 
-
+        /*
+         * Method      : btnConnect_Click
+         * Description : the event method for the button related to connecting to getting the contracts available from the contract marketplace
+         * Parameters  : default event args
+         * Returns     : N/A
+        */
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
             loadedContracts.Rows.Clear();
@@ -72,7 +98,12 @@ namespace TMS
 
 
 
-
+        /*
+         * Method      : btnCreateOrder_Click
+         * Description : the event method for creating an order from the data we pull from the contract marketplace
+         * Parameters  : default event args
+         * Returns     : N/A
+        */
         private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
         {
             DataRowView row = dataContractMarket.SelectedItems[0] as DataRowView;
@@ -100,7 +131,12 @@ namespace TMS
         }
 
 
-
+        /*
+         * Method      : btnCompletedOrders_Click
+         * Description : This method is used as an event for the button press that will laod our completed orders from the DB into a datagrid in the window
+         * Parameters  : N/A
+         * Returns     : N/A
+        */
         private void btnCompletedOrders_Click(object sender, RoutedEventArgs e)
         {
 
@@ -115,7 +151,12 @@ namespace TMS
             btnCreateInvoice.IsEnabled = false;
         }
 
-
+        /*
+         * Method      : dataContractMarket_SelectionChanged
+         * Description : this method is used as event to control user workflow disabling/enabling buttons until a selection is made
+         * Parameters  : default event args
+         * Returns     : N/A
+        */
         private void dataContractMarket_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnCreateOrder.IsEnabled = true;
@@ -123,7 +164,12 @@ namespace TMS
         }
 
 
-
+        /*
+         * Method      : btnCreateInvoice_Click
+         * Description : event method for invoice create button, pulls info from selected row and handles creating n invoice for that order
+         * Parameters  : N/A
+         * Returns     : N/A
+        */
         private void btnCreateInvoice_Click(object sender, RoutedEventArgs e)
         {
             //load row
@@ -175,6 +221,12 @@ namespace TMS
             btnCreateOrder.IsEnabled = false;
         }
 
+        /*
+         * Method      : dataCompletedOrders_SelectionChanged
+         * Description : this method is used as event to control user workflow disabling/enabling buttons until a selection is made
+         * Parameters  : default event args
+         * Returns     : N/A
+        */
         private void dataCompletedOrders_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             btnCreateInvoice.IsEnabled = true;
