@@ -536,5 +536,24 @@ namespace TMS.Classes
             }
             return dt;
         }
+
+        public DataTable PlannerGetTwoWeeksInvoice(DataTable dt)
+        {
+            string sqlStatem = "SELECT * FROM Invoice WHERE Date BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW();";
+            //try catch block for error validation and error checking
+            try
+            {
+                conn.Open();    //open connection
+                using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatem, conn)) //using the MySqlDataAdapter with the select statement associated with the connection
+                    da.Fill(dt);    //fill up the datatable of dt the contents of da(containing the values of Completed_Orders table
+                conn.Close();   //close connection
+            }
+            //display appropriate error message to user in case of error
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return dt;
+        }
     }
 }
