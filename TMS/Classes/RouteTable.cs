@@ -1,4 +1,11 @@
-﻿using MySqlX.XDevAPI.Relational;
+﻿/*
+ * File         : RouteTable.cs 
+ * Project      : Milestone 4 
+ * Programmer   : Alex Silveira, Emanuel Juracic, Josh Moore
+ * First Version: November 10th 2022
+ * Description  : This file contains the contents of the route table from a .csv file
+ */
+using MySqlX.XDevAPI.Relational;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,10 +16,19 @@ using System.Threading.Tasks;
 
 namespace TMS.Classes
 {
+    //Class     : RouteTable 
+    //Purpose   : This class is a container for the route table 
     static internal class RouteTable
     {
+        //public list
         public static List<City> corridor = new List<City>();
 
+        /*
+         * Method: RouteTable -- Constructor 
+         * Description: This is the constructor that initializes the list with data members
+         * Parameters: None
+         * Returns: None
+         */
         static RouteTable()
         {
             corridor.Add(new City("Windsor", 191, 2.5, "END", "London"));
